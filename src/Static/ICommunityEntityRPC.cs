@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Reflection.Emit;
-using API.Hooks;
-using Carbon.Client;
-using Carbon.Components;
-using HarmonyLib;
+﻿using API.Hooks;
 using Network;
-using UnityEngine;
 
 /*
  *
  * Copyright (c) 2022-2023 Carbon Community 
- * Copyright (c) 2023 Patrette
  * All rights reserved.
  *
  */
@@ -32,7 +23,7 @@ public partial class Category_Static
 		{
 			private static bool Prefix(BasePlayer player, uint rpc, Message msg, CommunityEntity __instance, ref bool __result)
 			{
-				if (RPC.HandleRPCMessage(player, rpc, msg) is bool value)
+				if (Carbon.Client.RPC.HandleRPCMessage(player, rpc, msg) is bool value)
 				{
 					__result = value;
 					return false;
