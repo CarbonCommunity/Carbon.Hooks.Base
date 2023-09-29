@@ -6,7 +6,7 @@ using UnityEngine;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -16,6 +16,7 @@ namespace Carbon.Hooks;
 
 public partial class Category_Static
 {
+#if !MINIMAL
 	public partial class Static_Debug
 	{
 		[HookAttribute.Patch("IDefaultChatValues", "IDefaultChatValues", typeof(ConVar.Chat), "Broadcast", new System.Type[] { typeof(string), typeof(string), typeof(string), typeof(ulong) })]
@@ -46,4 +47,5 @@ public partial class Category_Static
 			}
 		}
 	}
+#endif
 }
