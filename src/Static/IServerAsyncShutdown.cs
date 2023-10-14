@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Abstracts;
 using API.Hooks;
-using Carbon.Base;
 using Carbon.Core;
-using Carbon.Extensions;
-using Carbon.Plugins;
 using ConVar;
 
 /*
@@ -48,21 +44,15 @@ public partial class Category_Static
 			{
 				_isQuitting = true;
 
-				foreach (var package in ModLoader.LoadedPackages)
+				foreach (var plugin in ModLoader.LoadedPackages.SelectMany(package => package.Plugins))
 				{
-					foreach (var plugin in package.Plugins)
+					try
 					{
-						if (plugin is CarbonPlugin carbonPlugin)
-						{
-							try
-							{
-								await carbonPlugin.OnAsyncServerShutdown();
-							}
-							catch (Exception ex)
-							{
-								carbonPlugin.LogError("Failed asynchronous shutdown", ex);
-							}
-						}
+						await plugin.OnAsyncServerShutdown();
+					}
+					catch (Exception ex)
+					{
+						plugin.LogError("Failed asynchronous shutdown", ex);
 					}
 				}
 
