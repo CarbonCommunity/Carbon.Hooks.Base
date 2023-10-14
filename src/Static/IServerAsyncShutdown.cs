@@ -48,7 +48,10 @@ public partial class Category_Static
 
 				foreach (var module in Community.Runtime.ModuleProcessor.Modules)
 				{
-					await HandleHookable(module);
+					if (module is BaseModule baseModule && baseModule.GetEnabled())
+					{
+						await HandleHookable(module);
+					}
 				}
 
 				foreach (var plugin in ModLoader.LoadedPackages.SelectMany(package => package.Plugins))
