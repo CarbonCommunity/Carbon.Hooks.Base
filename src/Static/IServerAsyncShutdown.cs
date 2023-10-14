@@ -15,6 +15,7 @@ using ConVar;
 
 namespace Carbon.Hooks;
 #pragma warning disable IDE0051
+#pragma warning disable CS4014
 
 public partial class Category_Static
 {
