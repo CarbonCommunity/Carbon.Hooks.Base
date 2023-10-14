@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using API.Hooks;
+using Carbon.Base;
 using Carbon.Core;
 using ConVar;
 
@@ -44,15 +45,25 @@ public partial class Category_Static
 			{
 				_isQuitting = true;
 
+				foreach (var module in Community.Runtime.ModuleProcessor.Modules)
+				{
+					await HandleHookable(module);
+				}
+
 				foreach (var plugin in ModLoader.LoadedPackages.SelectMany(package => package.Plugins))
+				{
+					await HandleHookable(plugin);
+				}
+
+				async ValueTask HandleHookable(BaseHookable hookable)
 				{
 					try
 					{
-						await plugin.OnAsyncServerShutdown();
+						await hookable.OnAsyncServerShutdown();
 					}
 					catch (Exception ex)
 					{
-						plugin.LogError("Failed asynchronous shutdown", ex);
+						Logger.Error($"[{hookable.Name}] Failed asynchronous shutdown", ex);
 					}
 				}
 
