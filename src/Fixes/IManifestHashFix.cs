@@ -19,10 +19,9 @@ public partial class Category_Fixes
 	public partial class Fixes_FixManifestHash
 	{
 		[HookAttribute.Patch("IManifestHashFix", "IManifestHashFix", typeof(UnityEngine.StringEx), "ManifestHash", new System.Type[] { typeof(string) })]
-		[HookAttribute.Identifier("edcc22398f0302dc479d54a4f17482f3")]
 		[HookAttribute.Options(HookFlags.Hidden | HookFlags.Static | HookFlags.IgnoreChecksum)]
 
-		public class Fixes_ManifestHash_edcc22398f0302dc479d54a4f17482f3 : Patch
+		public class IManifestHashFix : Patch
 		{
 			internal static MD5CryptoServiceProvider _provider = new();
 

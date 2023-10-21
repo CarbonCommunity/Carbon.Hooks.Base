@@ -9,7 +9,7 @@ using Patch = API.Hooks.Patch;
 
 /*
  *
- * Copyright (c) 2023 Carbon Community 
+ * Copyright (c) 2023 Carbon Community
  * Copyright (c) 2023 turner
  * All rights reserved.
  *
@@ -24,13 +24,12 @@ public partial class Category_Static
 	public partial class Static_Console
 	{
 		[HookAttribute.Patch("IConsoleUpdate", "IConsoleUpdate", typeof(ConsoleInput), "Update", new System.Type[] { })]
-		[HookAttribute.Identifier("0e2b1792048b482387730fa17ea46f1f")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
-		public class Static_Console_Update_0e2b1792048b482387730fa17ea46f1f : Patch
+		public class IConsoleUpdate : Patch
 		{
 			public static void UpHook(ConsoleInput _this)
 			{
-				var up = Static_Console_Enter_7aec275cf9ec428baa152b4108fcd390.GetUp();
+				var up = IConsoleEnter.GetUp();
 				if (string.IsNullOrEmpty(up)) return;
 
 				_this.inputString = up;
@@ -39,7 +38,7 @@ public partial class Category_Static
 
 			public static void DownHook(ConsoleInput _this)
 			{
-				var down = Static_Console_Enter_7aec275cf9ec428baa152b4108fcd390.GetDown();
+				var down = IConsoleEnter.GetDown();
 
 				_this.inputString = string.IsNullOrEmpty(down) ? string.Empty : down;
 				_this.RedrawInputLine();
@@ -65,7 +64,7 @@ public partial class Category_Static
 						list.Add(new CodeInstruction(OpCodes.Sub, null));
 						list.Add(new CodeInstruction(OpCodes.Brtrue, label));
 						list.Add(new CodeInstruction(OpCodes.Ldarg_0, null));
-						list.Add(new CodeInstruction(OpCodes.Call, typeof(Static_Console_Update_0e2b1792048b482387730fa17ea46f1f).GetMethod("UpHook", BindingFlags.Static | BindingFlags.Public)));
+						list.Add(new CodeInstruction(OpCodes.Call, typeof(IConsoleUpdate).GetMethod("UpHook", BindingFlags.Static | BindingFlags.Public)));
 						list.Add(new CodeInstruction(OpCodes.Ret, null));
 						list.Add(new CodeInstruction(OpCodes.Nop, null)
 						{
@@ -80,7 +79,7 @@ public partial class Category_Static
 						list.Add(new CodeInstruction(OpCodes.Sub, null));
 						list.Add(new CodeInstruction(OpCodes.Brtrue, label2));
 						list.Add(new CodeInstruction(OpCodes.Ldarg_0, null));
-						list.Add(new CodeInstruction(OpCodes.Call, typeof(Static_Console_Update_0e2b1792048b482387730fa17ea46f1f).GetMethod("DownHook", BindingFlags.Static | BindingFlags.Public)));
+						list.Add(new CodeInstruction(OpCodes.Call, typeof(IConsoleUpdate).GetMethod("DownHook", BindingFlags.Static | BindingFlags.Public)));
 						list.Add(new CodeInstruction(OpCodes.Ret, null));
 						list.Add(new CodeInstruction(OpCodes.Nop, null)
 						{

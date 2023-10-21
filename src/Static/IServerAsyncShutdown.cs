@@ -22,10 +22,9 @@ public partial class Category_Static
 	public partial class Static_ServerMgr
 	{
 		[HookAttribute.Patch("IServerAsyncShutdown", "IServerAsyncShutdown", typeof(Global), "quit", new System.Type[] { typeof(ConsoleSystem.Arg) })]
-		[HookAttribute.Identifier("adcd48cf175e5002b4c64bb0d49150f4")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class Static_ServerMgr_adcd48cf175e5002b4c64bb0d49150f4 : Patch
+		public class IServerAsyncShutdown : Patch
 		{
 			internal static bool _isQuitting;
 			internal static bool _allowNative;
