@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Composition;
+using System.Net;
 using System.Runtime.Serialization;
 using API.Hooks;
 using Carbon.Extensions;
@@ -9,7 +11,7 @@ using Command = Oxide.Game.Rust.Libraries.Command;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -22,12 +24,14 @@ public partial class Category_Static
 	public partial class Static_RCon
 	{
 		[HookAttribute.Patch("OnRconCommand", "OnRconCommand", typeof(RCon), "OnCommand", new System.Type[] { typeof(Facepunch.RCon.Command) })]
-		[HookAttribute.Identifier("ccce0832a0eb4c28bc2372f5e0812c7e")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
-		// Called when an RCON command is run.
+		[MetadataAttribute.Info("Called when an RCON command is run.")]
+		[MetadataAttribute.Parameter("ip", typeof(IPAddress))]
+		[MetadataAttribute.Parameter("command", typeof(string))]
+		[MetadataAttribute.Parameter("arguments", typeof(string[]))]
 
-		public class Static_RCon_ccce0832a0eb4c28bc2372f5e0812c7e : Patch
+		public class OnRconCommand : Patch
 		{
 			internal static string[] EmptyArgs = new string[0];
 

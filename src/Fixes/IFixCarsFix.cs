@@ -6,7 +6,7 @@ using UnityEngine;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -19,10 +19,9 @@ public partial class Category_Fixes
 	public partial class Fixes_FixCars
 	{
 		[HookAttribute.Patch("IFixCarsFix", "IFixCarsFix", typeof(ConVar.vehicle), "fixcars", new System.Type[] { typeof(ConsoleSystem.Arg) })]
-		[HookAttribute.Identifier("b0136143c913407191e74f71dae7b675")]
 		[HookAttribute.Options(HookFlags.Hidden | HookFlags.Static | HookFlags.IgnoreChecksum)]
 
-		public class Fixes_ItemContainer_b0136143c913407191e74f71dae7b675 : Patch
+		public class IFixCarsFix : Patch
 		{
 			public static bool Prefix(ConsoleSystem.Arg arg)
 			{
