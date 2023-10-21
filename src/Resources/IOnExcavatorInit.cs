@@ -3,7 +3,7 @@ using UnityEngine;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -16,10 +16,9 @@ public partial class Category_Fixes
 	public partial class Fixes_Excavator
 	{
 		[HookAttribute.Patch("IOnExcavatorInit", "IOnExcavatorInit", typeof(ExcavatorArm), "Init", new System.Type[] { })]
-		[HookAttribute.Identifier("19c216996f424887898bb02596f180f0")]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
-		public class Fixes_Excavator_Init_19c216996f424887898bb02596f180f0 : Patch
+		public class IOnExcavatorInit : Patch
 		{
 			private static void Postfix(ExcavatorArm __instance)
 			{

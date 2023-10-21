@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -17,10 +17,9 @@ public partial class Category_Static
 	public partial class Static_Debug
 	{
 		[HookAttribute.Patch("ICleanDebugLog", "ICleanDebugLog", typeof(Debug), "Log", new System.Type[] { typeof(object) })]
-		[HookAttribute.Identifier("e1c940a317fe4608ad4add1510107c09")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class Static_Debug_Log_e1c940a317fe4608ad4add1510107c09 : Patch
+		public class ICleanDebugLog : Patch
 		{
 			internal static string[] _filter = new string[]
 			{
@@ -34,10 +33,9 @@ public partial class Category_Static
 		}
 
 		[HookAttribute.Patch("ICleanDebugLogWarning", "ICleanDebugLogWarning", typeof(Debug), "LogWarning", new System.Type[] { typeof(object) })]
-		[HookAttribute.Identifier("e1c940a317fe4608ad4add1510107c09")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class Static_Debug_LogWarning_e1c940a317fe4608ad4add1510107c09 : Patch
+		public class ICleanDebugLogWarning : Patch
 		{
 			internal static string[] _filter = new string[]
 			{

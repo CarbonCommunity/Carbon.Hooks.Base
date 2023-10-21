@@ -3,7 +3,7 @@ using API.Hooks;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -16,10 +16,9 @@ public partial class Category_Fixes
 	public partial class Fixes_FixDel
 	{
 		[HookAttribute.Patch("IDelFix", "IDelFix", typeof(ConVar.Hierarchy), "del", new System.Type[] { typeof(ConsoleSystem.Arg) })]
-		[HookAttribute.Identifier("877fdf4a8e0a44abbf15701db6641672")]
 		[HookAttribute.Options(HookFlags.Hidden | HookFlags.Static | HookFlags.IgnoreChecksum)]
 
-		public class Fixes_Del_877fdf4a8e0a44abbf15701db6641672 : Patch
+		public class IDelFix : Patch
 		{
 			public static bool Prefix(ConsoleSystem.Arg args)
 			{
