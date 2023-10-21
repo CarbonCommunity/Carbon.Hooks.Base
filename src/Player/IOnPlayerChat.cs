@@ -7,7 +7,7 @@ using static ConVar.Chat;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -20,10 +20,9 @@ public partial class Category_Player
 	public partial class BasePlayer_Player
 	{
 		[HookAttribute.Patch("IOnPlayerChat", "IOnPlayerChat", typeof(ConVar.Chat), "sayAs", new System.Type[] { typeof(Chat.ChatChannel), typeof(ulong), typeof(string), typeof(string), typeof(BasePlayer) })]
-		[HookAttribute.Identifier("8828fd118b234c298a04b4dc9b1a6e11")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden)]
 
-		public class BasePlayer_Player_8828fd118b234c298a04b4dc9b1a6e11 : Patch
+		public class IOnPlayerChat : Patch
 		{
 			internal const string Slash = "/";
 

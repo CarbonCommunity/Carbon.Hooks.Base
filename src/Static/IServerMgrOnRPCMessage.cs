@@ -9,7 +9,7 @@ using Network;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * Copyright (c) 2023 Patrette
  * All rights reserved.
  *
@@ -23,10 +23,9 @@ public partial class Category_Static
 	public partial class Static_ServerMgr
 	{
 		[HookAttribute.Patch("IServerMgrOnRPCMessage", "IServerMgrOnRPCMessage", typeof(ServerMgr), "OnRPCMessage", new System.Type[] { typeof(Message) })]
-		[HookAttribute.Identifier("9464ea9658b64780b7a19de84b077ebb")]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
-		public class Static_ServerMgr_OnRPCMessage_9464ea9658b64780b7a19de84b077ebb : API.Hooks.Patch
+		public class IServerMgrOnRPCMessage : API.Hooks.Patch
 		{
 			public static MethodInfo Method = AccessTools.Method(typeof(ClientEntity), "ServerRPCUnknown");
 

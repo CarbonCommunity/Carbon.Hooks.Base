@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Composition;
 using System.Runtime.Serialization;
 using API.Commands;
 using API.Hooks;
@@ -9,7 +10,7 @@ using Command = API.Commands.Command;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -23,12 +24,11 @@ public partial class Category_Static
 	public partial class Static_ConsoleSystem
 	{
 		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "Run", new System.Type[] { typeof(ConsoleSystem.Option), typeof(string), typeof(object[]) })]
-		[HookAttribute.Identifier("4be71c5d077949cdb88438ec6dabac24")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
+		
+		[MetadataAttribute.Info("Called whenever a Carbon server command is called.")]
 
-		// Called whenever a Carbon server command is called.
-
-		public class Static_ConsoleSystem_4be71c5d077949cdb88438ec6dabac24 : Patch
+		public class OnConsoleCommand : Patch
 		{
 			internal static string[] EmptyArgs = new string[0];
 			internal const string Space = " ";
