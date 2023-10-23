@@ -20,10 +20,9 @@ public partial class Category_Static
 	public partial class Static_Debug
 	{
 		[HookAttribute.Patch("IDefaultChatValues", "IDefaultChatValues", typeof(ConVar.Chat), "Broadcast", new System.Type[] { typeof(string), typeof(string), typeof(string), typeof(ulong) })]
-		[HookAttribute.Identifier("8291f2adf0e3432a893728b9ef949da8")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class Static_Debug_Log_8291f2adf0e3432a893728b9ef949da8 : Patch
+		public class IDefaultChatValues : Patch
 		{
 			public static void Prefix(string message, ref string username, ref string color, ref ulong userid)
 			{
