@@ -7,7 +7,7 @@ using Carbon.Extensions;
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -20,10 +20,9 @@ public partial class Category_Static
 	public partial class Static_ServerMgr
 	{
 		[HookAttribute.Patch("IServerInfoUpdate", "IServerInfoUpdate", typeof(ServerMgr), "UpdateServerInformation", new System.Type[] { })]
-		[HookAttribute.Identifier("aaa38191cc9f4f6f911df9742d552a99")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class Static_ServerMgr_aaa38191cc9f4f6f911df9742d552a99 : Patch
+		public class IServerInfoUpdate : Patch
 		{
 			public static bool ForceModded => CarbonAuto.Singleton.IsChanged() || Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
 

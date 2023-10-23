@@ -2,7 +2,7 @@
 
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
@@ -14,7 +14,6 @@ public partial class Category_Server
 	public partial class Server_ConsoleSystem
 	{
 		[HookAttribute.Patch("OnNativeCommandHasPermission", "OnNativeCommandHasPermission", typeof(ConsoleSystem.Arg), "HasPermission", new System.Type[] { })]
-		[HookAttribute.Identifier("708ba01d21fa4d33ae66bd25fe7390c1")]
 		[HookAttribute.Options(HookFlags.None)]
 
 		[MetadataAttribute.Info("Overrides Rust's native checks for command execution authorization.")]
@@ -22,7 +21,7 @@ public partial class Category_Server
 		[MetadataAttribute.Parameter("arg", typeof(ConsoleSystem.Arg))]
 		[MetadataAttribute.Return(typeof(bool))]
 
-		public class Static_ConsoleSystem_708ba01d21fa4d33ae66bd25fe7390c1 : Patch
+		public class OnNativeCommandHasPermission : Patch
 		{
 			public static bool Prefix(ref ConsoleSystem.Arg __instance, ref bool __result)
 			{

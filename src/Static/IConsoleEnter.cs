@@ -5,7 +5,7 @@ using Patch = API.Hooks.Patch;
 
 /*
  *
- * Copyright (c) 2023 Carbon Community 
+ * Copyright (c) 2023 Carbon Community
  * Copyright (c) 2023 turner
  * All rights reserved.
  *
@@ -20,9 +20,8 @@ public partial class Category_Static
 	public partial class Static_Console
 	{
 		[HookAttribute.Patch("IConsoleEnter", "IConsoleEnter", typeof(ConsoleInput), "OnEnter", new System.Type[] { })]
-		[HookAttribute.Identifier("7aec275cf9ec428baa152b4108fcd390")]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
-		public class Static_Console_Enter_7aec275cf9ec428baa152b4108fcd390 : Patch
+		public class IConsoleEnter : Patch
 		{
 			internal static LinkedList<string> history = new();
 			internal static int count = 0;
