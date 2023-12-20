@@ -31,7 +31,7 @@ public partial class Category_Static
 		[MetadataAttribute.Parameter("command", typeof(string))]
 		[MetadataAttribute.Parameter("arguments", typeof(string[]))]
 
-		public class OnRconCommand : Patch
+		public class IOnRconCommand : Patch
 		{
 			internal static string[] EmptyArgs = new string[0];
 
