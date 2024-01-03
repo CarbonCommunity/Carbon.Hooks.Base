@@ -35,13 +35,13 @@ public partial class Category_Static
 				{
 					ServerTagEx.SetRequiredTag("carbon");
 
-					if (CarbonClient.ClientEnabled)
+					if (Community.Runtime.ClientConfig.Enabled)
 					{
-						ServerTagEx.SetRequiredTag("carboncl");
+						ServerTagEx.SetRequiredTag("c4c");
 					}
 					else
 					{
-						ServerTagEx.UnsetRequiredTag("carboncl");
+						ServerTagEx.UnsetRequiredTag("c4c");
 					}
 
 					if (Community.Runtime.Config.IsModded || ForceModded)
