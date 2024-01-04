@@ -25,7 +25,7 @@ public partial class Category_Static
 		[MetadataAttribute.Info("Also called for plugins that are hotloaded while the server is already started running.")]
 		[MetadataAttribute.Parameter("initialLoad", typeof(bool), true)]
 
-		public class OnServerInitialized : Patch
+		public class IOnServerInitialized : Patch
 		{
 			public static void Postfix()
 				=> Events.Trigger(CarbonEvent.OnServerInitialized, EventArgs.Empty);
