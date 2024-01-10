@@ -25,7 +25,11 @@ public partial class Category_Static
 
 		public class IServerInfoUpdate : Patch
 		{
-			public static bool ForceModded => CarbonAuto.Singleton.IsChanged() || Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
+			public static bool ForceModded =>
+#if !MINIMAL
+				CarbonAuto.Singleton.IsChanged() ||
+#endif
+			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
 
 			public static void Postfix()
 			{
