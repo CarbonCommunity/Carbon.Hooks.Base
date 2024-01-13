@@ -16,7 +16,7 @@ public partial class Category_Fixes
 	public partial class Fixes_MixingTable
 	{
 
-		[HookAttribute.Patch("IMixingSpeedMultiplier", "IMixingSpeedMultiplier", typeof(MixingTable), nameof(MixingTable.StartMixing), [typeof(BasePlayer)])]
+		[HookAttribute.Patch("IMixingSpeedMultiplier", "IMixingSpeedMultiplier", typeof(MixingTable), nameof(MixingTable.StartMixing), new Type[] { typeof(BasePlayer) })]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
 		public class IMixingSpeedMultiplier : Patch
