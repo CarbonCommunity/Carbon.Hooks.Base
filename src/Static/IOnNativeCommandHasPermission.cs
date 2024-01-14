@@ -21,7 +21,7 @@ public partial class Category_Server
 		[MetadataAttribute.Parameter("arg", typeof(ConsoleSystem.Arg))]
 		[MetadataAttribute.Return(typeof(bool))]
 
-		public class OnNativeCommandHasPermission : Patch
+		public class IOnNativeCommandHasPermission : Patch
 		{
 			public static bool Prefix(ref ConsoleSystem.Arg __instance, ref bool __result)
 			{
