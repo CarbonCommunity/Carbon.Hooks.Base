@@ -1,4 +1,5 @@
-﻿using API.Hooks;
+﻿using System;
+using API.Hooks;
 
 /*
  *
@@ -14,25 +15,21 @@ public partial class Category_Fixes
 {
 	public partial class Fixes_MixingTable
 	{
-		[HookAttribute.Patch("IMixingSpeedMultiplier", "IMixingSpeedMultiplier", typeof(MixingTable), "set_RemainingMixTime", new System.Type[] { typeof(float) })]
+
+		[HookAttribute.Patch("IMixingSpeedMultiplier", "IMixingSpeedMultiplier", typeof(MixingTable), nameof(MixingTable.StartMixing), new Type[] { typeof(BasePlayer) })]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
 		public class IMixingSpeedMultiplier : Patch
 		{
-			public static void Prefix(ref float value, ref MixingTable __instance)
+			public static void Postfix(BasePlayer player, ref MixingTable __instance)
 			{
+				var value = __instance.RemainingMixTime;
 				var hook = HookCaller.CallStaticHook(2901256393, __instance, value);
 
-				if (hook is float overridenValue)
+				if (value > 0f && hook is float overridenValue)
 				{
-					if (value <= 0f)
-					{
-						value = 0f;
-					}
-					else
-					{
-						value /= overridenValue;
-					}
+					__instance.RemainingMixTime = __instance.TotalMixTime /= overridenValue;
+					__instance.SendNetworkUpdateImmediate();
 				}
 			}
 		}
