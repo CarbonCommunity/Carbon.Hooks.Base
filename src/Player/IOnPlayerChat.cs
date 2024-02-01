@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using API.Hooks;
 using ConVar;
 using Oxide.Core;
@@ -24,13 +25,28 @@ public partial class Category_Player
 
 		public class IOnPlayerChat : Patch
 		{
-			internal const string Slash = "/";
+			public static bool IsValidCommand(string source)
+			{
+				if (API.Commands.Command.Prefixes == null)
+				{
+					Logger.Error("This is really bad. Let the devs know ASAP, unless some plugin broke this. (IOnPlayerChat.IsValidCommand -> Prefixes == null");
+					return false;
+				}
+
+				if (string.IsNullOrEmpty(source))
+				{
+					return false;
+				}
+
+				source = source[..1];
+				return API.Commands.Command.Prefixes.Contains(source);
+			}
 
 			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, string message, BasePlayer player, ref ValueTask<bool> __result)
 			{
 				if (string.IsNullOrEmpty(message)) return true;
 
-				if (message.StartsWith(Slash) && HookCaller.CallStaticHook(2581265021, player, message) is bool hookValue1)
+				if (IsValidCommand(message) && HookCaller.CallStaticHook(2581265021, player, message) is bool hookValue1)
 				{
 					__result = new ValueTask<bool>(hookValue1);
 					return false;
