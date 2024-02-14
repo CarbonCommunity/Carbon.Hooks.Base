@@ -25,10 +25,10 @@ public partial class Category_Static
 	{
 		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "Run", new System.Type[] { typeof(ConsoleSystem.Option), typeof(string), typeof(object[]) })]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
-		
+
 		[MetadataAttribute.Info("Called whenever a Carbon server command is called.")]
 
-		public class OnConsoleCommand : Patch
+		public class IOnConsoleCommand : Patch
 		{
 			internal static string[] EmptyArgs = new string[0];
 			internal const string Space = " ";

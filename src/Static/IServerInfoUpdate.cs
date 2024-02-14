@@ -4,6 +4,7 @@ using API.Abstracts;
 using API.Hooks;
 using Carbon.Base;
 using Carbon.Extensions;
+using CarbonClient = Carbon.Client.Client;
 
 /*
  *
@@ -24,7 +25,11 @@ public partial class Category_Static
 
 		public class IServerInfoUpdate : Patch
 		{
-			public static bool ForceModded => CarbonAuto.Singleton.IsChanged() || Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
+			public static bool ForceModded =>
+#if !MINIMAL
+				CarbonAuto.Singleton.IsChanged() ||
+#endif
+			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
 
 			public static void Postfix()
 			{
@@ -33,6 +38,15 @@ public partial class Category_Static
 				try
 				{
 					ServerTagEx.SetRequiredTag("carbon");
+
+					if (Community.Runtime.ClientConfig.Enabled)
+					{
+						ServerTagEx.SetRequiredTag("c4c");
+					}
+					else
+					{
+						ServerTagEx.UnsetRequiredTag("c4c");
+					}
 
 					if (Community.Runtime.Config.IsModded || ForceModded)
 					{
