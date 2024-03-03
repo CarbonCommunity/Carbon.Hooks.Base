@@ -45,13 +45,6 @@ public partial class Category_Player
 
 			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, string message, BasePlayer player, ref ValueTask<bool> __result)
 			{
-				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel,
-					    player) is bool internalHookValue && !internalHookValue)
-				{
-					__result = new ValueTask<bool>(internalHookValue);
-					return internalHookValue;
-				}
-
 				if (string.IsNullOrEmpty(message)) return true;
 
 				if (IsValidCommand(message) && CorePlugin.IOnPlayerCommand(player, message) is bool hookValue1)
@@ -59,7 +52,8 @@ public partial class Category_Player
 					__result = new ValueTask<bool>(hookValue1);
 					return false;
 				}
-				else if (HookCaller.CallStaticHook(787516416, userId, username, message, targetChannel, player) is bool hookValue2)
+
+				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel, player) is bool hookValue2)
 				{
 					__result = new ValueTask<bool>(hookValue2);
 					return false;
