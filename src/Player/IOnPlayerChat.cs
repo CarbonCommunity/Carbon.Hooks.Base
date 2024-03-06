@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using API.Hooks;
+using Carbon.Core;
 using ConVar;
 using Oxide.Core;
 using UnityEngine;
@@ -46,12 +47,13 @@ public partial class Category_Player
 			{
 				if (string.IsNullOrEmpty(message)) return true;
 
-				if (IsValidCommand(message) && HookCaller.CallStaticHook(2581265021, player, message) is bool hookValue1)
+				if (IsValidCommand(message) && CorePlugin.IOnPlayerCommand(player, message) is bool hookValue1)
 				{
 					__result = new ValueTask<bool>(hookValue1);
 					return false;
 				}
-				else if (HookCaller.CallStaticHook(787516416, userId, username, message, targetChannel, player) is bool hookValue2)
+
+				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel, player) is bool hookValue2)
 				{
 					__result = new ValueTask<bool>(hookValue2);
 					return false;
