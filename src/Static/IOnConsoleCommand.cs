@@ -46,7 +46,7 @@ public partial class Category_Static
 					var fullString = split.ToString(Space);
 					Array.Clear(split, 0, split.Length);
 
-					if (Community.Runtime.Config.Misc.oCommandChecks && command.StartsWith("o.") || command.StartsWith("oxide."))
+					if (Community.Runtime.Config.Misc.oCommandChecks && (command.StartsWith("o.") || command.StartsWith("oxide.")))
 					{
 						Analytics.o_command_attempt(command, options);
 
