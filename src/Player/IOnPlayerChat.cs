@@ -39,8 +39,7 @@ public partial class Category_Player
 					return false;
 				}
 
-				source = source[..1];
-				return API.Commands.Command.Prefixes.Contains(source);
+				return API.Commands.Command.Prefixes.Contains(source[..1]);
 			}
 
 			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, string message, BasePlayer player, ref ValueTask<bool> __result)
