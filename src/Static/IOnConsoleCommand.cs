@@ -3,6 +3,7 @@ using System.Composition;
 using System.Runtime.Serialization;
 using API.Commands;
 using API.Hooks;
+using Carbon.Components;
 using Carbon.Extensions;
 using Facepunch.Extend;
 using static ConsoleSystem;
@@ -45,8 +46,10 @@ public partial class Category_Static
 					var fullString = split.ToString(Space);
 					Array.Clear(split, 0, split.Length);
 
-					if (Community.Runtime.Config.oCommandChecks && command.StartsWith("o.") || command.StartsWith("oxide."))
+					if (Community.Runtime.Config.Misc.oCommandChecks && (command.StartsWith("o.") || command.StartsWith("oxide.")))
 					{
+						Analytics.o_command_attempt(command, options);
+
 						Logger.Warn($"Oxide commands (o.* or oxide.*) don't work in Carbon. Please use 'c.find c.' to list all available Carbon commands.");
 						return false;
 					}
