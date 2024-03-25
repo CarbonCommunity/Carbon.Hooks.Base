@@ -31,33 +31,44 @@ public partial class Category_Fixes
 
 				var count = 0;
 				var invalidEntities = 0;
+				var failedEntities = 0;
 				var fullString = args.FullString.ToLower();
 
 				pool.Each(entity =>
 				{
-					if (entity.name.ToLower() == fullString || entity.name.StartsWith(fullString, StringComparison.CurrentCultureIgnoreCase) || entity.GetType().Name.ToLower() == fullString)
+					try
 					{
-						if (entity.IsValid())
+						if (entity != null && entity.name.ToLower() == fullString ||
+						    entity.name.StartsWith(fullString, StringComparison.CurrentCultureIgnoreCase) ||
+						    entity.GetType().Name.ToLower() == fullString)
 						{
-							if(entity is BasePlayer player)
+							if (entity.IsValid())
 							{
-								if (player.IsConnected)
+								if (entity is BasePlayer player)
 								{
-									return;
+									if (player.IsConnected)
+									{
+										return;
+									}
 								}
-							}
 
-							count++;
-							entity.Kill();
+								count++;
+								entity.Kill();
+							}
+							else
+							{
+								invalidEntities++;
+							}
 						}
-						else
-						{
-							invalidEntities++;
-						}
+					}
+					catch (Exception ex)
+					{
+						Logger.Error($"Failed destroying '{entity}'", ex);
+						failedEntities++;
 					}
 				});
 
-				args.ReplyWith($"Deleted {count:n0} entities (found {invalidEntities:n0} invalid).");
+				args.ReplyWith($"Deleted {count:n0} entities (found {invalidEntities:n0} invalid, {failedEntities:n0} failed).");
 				return false;
 			}
 		}
