@@ -50,7 +50,8 @@ public partial class Category_Static
 					{
 						Analytics.o_command_attempt(command, options);
 
-						Logger.Warn($"Oxide commands (o.* or oxide.*) don't work in Carbon. Please use 'c.find c.' to list all available Carbon commands.");
+						Logger.Warn($"Oxide commands (o.* or oxide.*) don't work in Carbon. Please use 'c.find c.' to list all available Carbon commands.\n" +
+						            $"  Tried executing: {fullString}");
 						return false;
 					}
 
