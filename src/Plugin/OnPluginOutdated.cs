@@ -23,6 +23,7 @@ public partial class Category_Plugin
 		[HookAttribute.Patch("OnPluginOutdated", "OnPluginOutdated", null, null, null)]
 		[HookAttribute.Options(HookFlags.MetadataOnly)]
 
+		[MetadataAttribute.Category("Plugin")]
 		[MetadataAttribute.Info("Gets called whenever a plugin from the Admin module -> Plugins tab is marked as 'auto-updateable' and is outdated.")]
 		[MetadataAttribute.Parameter("pluginName", typeof(string))]
 		[MetadataAttribute.Parameter("currentVersion", typeof(VersionNumber))]
