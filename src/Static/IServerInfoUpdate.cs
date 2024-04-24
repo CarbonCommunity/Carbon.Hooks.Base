@@ -37,7 +37,7 @@ public partial class Category_Static
 
 				try
 				{
-					ServerTagEx.SetRequiredTag("carbon");
+					ServerTagEx.SetRequiredTag("^y");
 
 					if (Community.Runtime.ClientConfig.Enabled)
 					{
@@ -50,11 +50,11 @@ public partial class Category_Static
 
 					if (Community.Runtime.Config.IsModded || ForceModded)
 					{
-						ServerTagEx.SetRequiredTag("modded");
+						ServerTagEx.SetRequiredTag("^z");
 					}
 					else
 					{
-						ServerTagEx.UnsetRequiredTag("modded");
+						ServerTagEx.UnsetRequiredTag("^z");
 					}
 				}
 				catch (Exception ex)
