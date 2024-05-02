@@ -37,24 +37,24 @@ public partial class Category_Static
 
 				try
 				{
-					ServerTagEx.SetRequiredTag("carbon");
+					ServerTagEx.SetRequiredTag("^y", true);
 
 					if (Community.Runtime.ClientConfig.Enabled)
 					{
-						ServerTagEx.SetRequiredTag("c4c");
+						ServerTagEx.SetRequiredTag("c4c", false);
 					}
 					else
 					{
-						ServerTagEx.UnsetRequiredTag("c4c");
+						ServerTagEx.UnsetRequiredTag("c4c", false);
 					}
 
 					if (Community.Runtime.Config.IsModded || ForceModded)
 					{
-						ServerTagEx.SetRequiredTag("modded");
+						ServerTagEx.SetRequiredTag("^z", true);
 					}
 					else
 					{
-						ServerTagEx.UnsetRequiredTag("modded");
+						ServerTagEx.UnsetRequiredTag("^z", true);
 					}
 				}
 				catch (Exception ex)
