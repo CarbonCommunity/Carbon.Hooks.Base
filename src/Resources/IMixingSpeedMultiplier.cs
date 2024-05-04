@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !MINIMAL
+
+using System;
 using API.Hooks;
 
 /*
@@ -24,9 +26,8 @@ public partial class Category_Fixes
 			public static void Postfix(BasePlayer player, ref MixingTable __instance)
 			{
 				var value = __instance.RemainingMixTime;
-				var hook = HookCaller.CallStaticHook(2901256393, __instance, value);
 
-				if (value > 0f && hook is float overridenValue)
+				if (value > 0f && Community.Runtime.Core.IMixingSpeedMultiplier(__instance, value) is float overridenValue)
 				{
 					__instance.RemainingMixTime = __instance.TotalMixTime /= overridenValue;
 					__instance.SendNetworkUpdateImmediate();
@@ -35,3 +36,5 @@ public partial class Category_Fixes
 		}
 	}
 }
+
+#endif

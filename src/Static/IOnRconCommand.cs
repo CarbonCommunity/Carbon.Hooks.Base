@@ -87,7 +87,7 @@ public partial class Category_Static
 						Logger.Error("RconCommand_OnCommand", ex);
 					}
 
-					Community.Runtime.CorePlugin.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 				}
 				catch { }
 

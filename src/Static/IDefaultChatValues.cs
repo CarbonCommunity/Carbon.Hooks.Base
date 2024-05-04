@@ -28,7 +28,7 @@ public partial class Category_Static
 			{
 				const string defaultValue = "-1";
 
-				if(userid == 0ul && Community.Runtime.CorePlugin is CorePlugin core)
+				if(userid == 0ul && Community.Runtime.Core is CorePlugin core)
 				{
 					if (core.DefaultServerChatName != defaultValue)
 					{
