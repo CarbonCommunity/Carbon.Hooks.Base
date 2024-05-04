@@ -27,7 +27,7 @@ public partial class Category_Static
 		{
 			public static bool ForceModded =>
 #if !MINIMAL
-				CarbonAuto.Singleton.IsChanged() ||
+				CarbonAuto.Singleton.IsForceModded() ||
 #endif
 			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
 

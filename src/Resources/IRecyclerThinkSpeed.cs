@@ -15,26 +15,18 @@ public partial class Category_Fixes
 {
 	public partial class Fixes_Recycler
 	{
-		[HookAttribute.Patch("IRecyclerThinkSpeed", "IRecyclerThinkSpeed", typeof(Recycler), "StartRecycling", new System.Type[] { })]
+		[HookAttribute.Patch("IRecyclerThinkSpeed", "IRecyclerThinkSpeed", typeof(Recycler), "GetRecycleThinkDuration", new System.Type[] { })]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
 		public class IRecyclerThinkSpeed : Patch
 		{
-			private static bool Prefix(Recycler __instance)
+			private static bool Prefix(Recycler __instance, ref float __result)
 			{
 				var hook = HookCaller.CallStaticHook(880503512, __instance);
 
 				if (hook is float value)
 				{
-					if (__instance.IsOn())
-					{
-						return false;
-					}
-
-					__instance.InvokeRepeating(__instance.RecycleThink, value, value);
-					Effect.server.Run(__instance.startSound.resourcePath, __instance, 0U, Vector3.zero, Vector3.zero, null, false);
-					__instance.SetFlag(BaseEntity.Flags.On, true, false, true);
-					__instance.SendNetworkUpdateImmediate(false);
+					__result = value;
 					return false;
 				}
 
