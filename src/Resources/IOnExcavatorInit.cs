@@ -22,7 +22,7 @@ public partial class Category_Fixes
 		{
 			private static void Postfix(ExcavatorArm __instance)
 			{
-				HookCaller.CallStaticHook(1290758824, __instance);
+				Community.Runtime.Core.IOnExcavatorInit(__instance);
 			}
 		}
 	}

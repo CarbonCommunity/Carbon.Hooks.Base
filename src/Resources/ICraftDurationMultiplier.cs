@@ -21,9 +21,7 @@ public partial class Category_Fixes
 		{
 			public static void Postfix(ItemBlueprint bp, float workbenchLevel, bool isInTutorial, ref float __result)
 			{
-				var hook = HookCaller.CallStaticHook(4130008882, bp, workbenchLevel);
-
-				if (hook is float value)
+				if (Community.Runtime.Core.ICraftDurationMultiplier() is float value)
 				{
 					__result *= value;
 				}

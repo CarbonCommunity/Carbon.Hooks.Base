@@ -22,15 +22,10 @@ public partial class Category_Fixes
 		{
 			private static bool Prefix(Recycler __instance, ref float __result)
 			{
-				var hook = HookCaller.CallStaticHook(880503512, __instance);
+				if (Community.Runtime.Core.IRecyclerThinkSpeed(__instance) is not float value) return true;
+				__result = value;
+				return false;
 
-				if (hook is float value)
-				{
-					__result = value;
-					return false;
-				}
-
-				return true;
 			}
 		}
 	}
