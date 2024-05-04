@@ -1,5 +1,6 @@
-﻿using API.Hooks;
-using UnityEngine;
+﻿#if !MINIMAL
+
+using API.Hooks;
 
 /*
  *
@@ -30,3 +31,5 @@ public partial class Category_Fixes
 		}
 	}
 }
+
+#endif

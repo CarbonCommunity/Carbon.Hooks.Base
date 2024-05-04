@@ -1,4 +1,6 @@
-﻿using API.Hooks;
+﻿#if !MINIMAL
+
+using API.Hooks;
 
 /*
  *
@@ -43,3 +45,5 @@ public partial class Category_Fixes
 		}
 	}
 }
+
+#endif

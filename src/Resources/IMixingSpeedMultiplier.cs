@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !MINIMAL
+
+using System;
 using API.Hooks;
 
 /*
@@ -34,3 +36,5 @@ public partial class Category_Fixes
 		}
 	}
 }
+
+#endif
