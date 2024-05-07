@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Composition;
 using System.Linq;
 using System.Runtime.Serialization;
 using API.Commands;
@@ -25,7 +24,7 @@ public partial class Category_Static
 {
 	public partial class Static_ConsoleSystem
 	{
-		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "Run", new System.Type[] { typeof(ConsoleSystem.Option), typeof(string), typeof(object[]) })]
+		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "Run", new System.Type[] { typeof(Option), typeof(string), typeof(object[]) })]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called whenever a Carbon server command is called.")]
@@ -80,6 +79,27 @@ public partial class Category_Static
 							arg = null;
 
 							return false;
+						}
+
+						if (Community.Runtime.Config.Logging.CommandSuggestions)
+						{
+							if (player != null && !player.IsAdmin)
+							{
+								return true;
+							}
+
+							if (ConsoleSystem.Index.Server.Find(command) != null)
+							{
+								return true;
+							}
+
+							var suggestion = Suggestions.Lookup(command, Community.Runtime.CommandManager.ClientConsole.Select(x => x.Name));
+
+							if (suggestion.Confidence <= 5)
+							{
+								Logger.Log($"Command '{command}' not found. Suggesting: {suggestion.Result}");
+								return false;
+							}
 						}
 					}
 				}

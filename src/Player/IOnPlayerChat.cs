@@ -28,8 +28,10 @@ public partial class Category_Player
 
 		public class IOnPlayerChat : Patch
 		{
-			public static bool IsValidCommand(string input, BasePlayer player)
+			public static bool IsValidCommand(string input, BasePlayer player, out API.Commands.Command.Prefix prefix)
 			{
+				prefix = null;
+				
 				if (string.IsNullOrEmpty(input))
 				{
 					return false;
@@ -41,7 +43,7 @@ public partial class Category_Player
 					return false;
 				}
 
-				if (!API.Commands.Command.HasPrefix(input[..1], out var prefix)) return false;
+				if (!API.Commands.Command.HasPrefix(input[..1], out prefix)) return false;
 
 				if (prefix.PrintToChat)
 				{
@@ -61,7 +63,7 @@ public partial class Category_Player
 			{
 				if (string.IsNullOrEmpty(message)) return true;
 
-				if (IsValidCommand(message, player) && CorePlugin.IOnPlayerCommand(player, message) is bool hookValue1)
+				if (IsValidCommand(message, player, out var prefix) && CorePlugin.IOnPlayerCommand(player, message, prefix) is bool hookValue1)
 				{
 					__result = new ValueTask<bool>(hookValue1);
 					return false;
