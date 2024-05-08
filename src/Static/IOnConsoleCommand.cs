@@ -97,7 +97,17 @@ public partial class Category_Static
 
 							if (suggestion.Confidence <= 5)
 							{
-								Logger.Log($"Command '{command}' not found. Suggesting: {suggestion.Result}");
+								var log = $"Command '{command}' not found. Suggesting: {suggestion.Result}";
+
+								if (player != null)
+								{
+									player.ConsoleMessage(log);
+								}
+								else
+								{
+									Logger.Log(log);
+								}
+
 								return false;
 							}
 						}
