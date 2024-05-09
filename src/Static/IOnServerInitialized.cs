@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using API.Events;
 using API.Hooks;
-using CompanionServer.Handlers;
 
 /*
  *
@@ -28,7 +26,14 @@ public partial class Category_Static
 		public class IOnServerInitialized : Patch
 		{
 			public static void Postfix()
-				=> Events.Trigger(CarbonEvent.OnServerInitialized, EventArgs.Empty);
+			{
+				if (!ConVar.Server.autoUploadMap)
+				{
+					Community.Runtime.MarkServerInitialized(true);
+				}
+
+				Events.Trigger(CarbonEvent.OnServerInitialized, EventArgs.Empty);
+			}
 		}
 	}
 }
