@@ -47,7 +47,7 @@ public partial class Category_Static
 
 				foreach (var module in Community.Runtime.ModuleProcessor.Modules)
 				{
-					if (module is BaseModule baseModule && baseModule.GetEnabled())
+					if (module is BaseModule baseModule && baseModule.IsEnabled())
 					{
 						await HandleHookable(module);
 					}
