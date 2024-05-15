@@ -29,7 +29,7 @@ public partial class Category_Static
 #if !MINIMAL
 				CarbonAuto.Singleton.IsForceModded() ||
 #endif
-			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.GetEnabled() && module.ForceModded);
+			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.IsEnabled() && module.ForceModded);
 
 			public static void Postfix()
 			{
