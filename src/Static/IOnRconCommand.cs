@@ -50,7 +50,7 @@ public partial class Category_Static
 
 					var arguments = split.Length > 1 ? cmd.Message.Substring(command.Length + 1).SplitQuotesStrings() : EmptyArgs;
 
-					if (HookCaller.CallStaticHook(3694352140, cmd.Ip, command, arguments) != null)
+					if (HookCaller.CallStaticHook(3740958730, cmd.Ip, command, arguments) != null)
 					{
 						return false;
 					}
@@ -87,7 +87,7 @@ public partial class Category_Static
 						Logger.Error("RconCommand_OnCommand", ex);
 					}
 
-					Community.Runtime.CorePlugin.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 				}
 				catch { }
 

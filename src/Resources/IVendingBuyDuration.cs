@@ -1,4 +1,6 @@
-﻿using API.Hooks;
+﻿#if !MINIMAL
+
+using API.Hooks;
 
 /*
  *
@@ -21,15 +23,10 @@ public partial class Category_Fixes
 		{
 			public static bool Prefix(VendingMachine __instance, ref float __result)
 			{
-				var hook = HookCaller.CallStaticHook(2959446098, __instance);
+				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return true;
+				__result = value;
+				return false;
 
-				if (hook is float value)
-				{
-					__result = value;
-					return false;
-				}
-
-				return true;
 			}
 		}
 
@@ -40,16 +37,13 @@ public partial class Category_Fixes
 		{
 			public static bool Prefix(InvisibleVendingMachine __instance, ref float __result)
 			{
-				var hook = HookCaller.CallStaticHook(2959446098, __instance);
+				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return true;
+				__result = value;
+				return false;
 
-				if (hook is float value)
-				{
-					__result = value;
-					return false;
-				}
-
-				return true;
 			}
 		}
 	}
 }
+
+#endif
