@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Hooks;
+using Carbon.Components;
 using Carbon.Core;
 using ConVar;
 using Oxide.Core;
@@ -26,39 +28,53 @@ public partial class Category_Player
 
 		public class IOnPlayerChat : Patch
 		{
-			public static bool IsValidCommand(string source)
+			public static bool IsValidCommand(string input, BasePlayer player, out API.Commands.Command.Prefix prefix)
 			{
+				prefix = null;
+				
+				if (string.IsNullOrEmpty(input))
+				{
+					return false;
+				}
+
 				if (API.Commands.Command.Prefixes == null)
 				{
-					Logger.Error("This is really bad. Let the devs know ASAP, unless some plugin broke this. (IOnPlayerChat.IsValidCommand -> Prefixes == null");
+					Logger.Error("This is really bad. Let the devs know ASAP, unless some plugin broke this. (Prefixes == null)");
 					return false;
 				}
 
-				if (string.IsNullOrEmpty(source))
+				if (!API.Commands.Command.HasPrefix(input[..1], out prefix)) return false;
+
+				if (prefix.PrintToChat)
 				{
-					return false;
+					player.ChatMessage($"<color=orange>Command:</color> {input}");
 				}
 
-				return API.Commands.Command.Prefixes.Contains(source[..1]);
+				if (prefix.PrintToConsole)
+				{
+					ServerConsole.PrintColoured(ConsoleColor.DarkYellow, $"[{player.Connection}]: ", ConsoleColor.DarkGreen, input);
+				}
+
+				return true;
+
 			}
 
 			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, string message, BasePlayer player, ref ValueTask<bool> __result)
 			{
 				if (string.IsNullOrEmpty(message)) return true;
 
-				if (IsValidCommand(message) && CorePlugin.IOnPlayerCommand(player, message) is bool hookValue1)
+				if (IsValidCommand(message, player, out var prefix) && CorePlugin.IOnPlayerCommand(player, message, prefix) is bool hookValue1)
 				{
 					__result = new ValueTask<bool>(hookValue1);
 					return false;
 				}
 
-				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel, player) is bool hookValue2)
-				{
-					__result = new ValueTask<bool>(hookValue2);
-					return false;
-				}
+				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel, player) is not bool hookValue2)
+					return true;
 
-				return true;
+				__result = new ValueTask<bool>(hookValue2);
+				return false;
+
 			}
 		}
 	}
