@@ -27,11 +27,6 @@ public partial class Category_Static
 		{
 			public static void Postfix()
 			{
-				if (!ConVar.Server.autoUploadMap)
-				{
-					Community.Runtime.MarkServerInitialized(true);
-				}
-
 				Events.Trigger(CarbonEvent.OnServerInitialized, EventArgs.Empty);
 			}
 		}
