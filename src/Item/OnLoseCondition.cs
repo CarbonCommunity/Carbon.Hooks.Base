@@ -22,9 +22,6 @@ public partial class Category_Item
 		[MetadataAttribute.Parameter("item", typeof(Item))]
 		[MetadataAttribute.Parameter("amount", typeof(float))]
 
-		public class OnLoseCondition : Patch
-		{
-
-		}
+		public class OnLoseCondition : Patch;
 	}
 }
