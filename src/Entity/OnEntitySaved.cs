@@ -27,9 +27,6 @@ public partial class Category_Entity
 		[MetadataAttribute.Parameter("networkable", typeof(BaseNetworkable))]
 		[MetadataAttribute.Parameter("info", typeof(BaseNetworkable.SaveInfo))]
 
-		public class OnEntitySaved : Patch
-		{
-
-		}
+		public class OnEntitySaved : Patch;
 	}
 }
