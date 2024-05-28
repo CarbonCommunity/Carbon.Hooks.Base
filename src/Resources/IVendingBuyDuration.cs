@@ -21,12 +21,10 @@ public partial class Category_Fixes
 
 		public class IVendingBuyDuration1 : Patch
 		{
-			public static bool Prefix(VendingMachine __instance, ref float __result)
+			public static void Postfix(VendingMachine __instance, ref float __result)
 			{
-				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return true;
-				__result = value;
-				return false;
-
+				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return;
+				__result *= value;
 			}
 		}
 
@@ -35,12 +33,10 @@ public partial class Category_Fixes
 
 		public class IVendingBuyDuration2 : Patch
 		{
-			public static bool Prefix(InvisibleVendingMachine __instance, ref float __result)
+			public static void Postfix(InvisibleVendingMachine __instance, ref float __result)
 			{
-				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return true;
-				__result = value;
-				return false;
-
+				if (Community.Runtime.Core.IVendingBuyDuration() is not float value) return;
+				__result *= value;
 			}
 		}
 	}
