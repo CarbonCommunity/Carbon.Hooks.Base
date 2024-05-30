@@ -21,12 +21,10 @@ public partial class Category_Fixes
 
 		public class IRecyclerThinkSpeed : Patch
 		{
-			private static bool Prefix(Recycler __instance, ref float __result)
+			private static void Postfix(Recycler __instance, ref float __result)
 			{
-				if (Community.Runtime.Core.IRecyclerThinkSpeed(__instance) is not float value) return true;
-				__result = value;
-				return false;
-
+				if (Community.Runtime.Core.IRecyclerThinkSpeed(__instance) is not float value) return;
+				__result *= value;
 			}
 		}
 	}
