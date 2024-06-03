@@ -60,7 +60,7 @@ public partial class Category_Static
 
 					#if !MINIMAL
 
-					if (!string.IsNullOrEmpty(Community.Runtime.Core.CustomMapName))
+					if (!string.IsNullOrEmpty(Community.Runtime.Core.CustomMapName) && !Community.Runtime.Core.CustomMapName.Equals("-1"))
 					{
 						SteamServer.MapName = Community.Runtime.Core.CustomMapName;
 					}
