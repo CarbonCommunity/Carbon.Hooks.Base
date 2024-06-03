@@ -4,6 +4,7 @@ using API.Abstracts;
 using API.Hooks;
 using Carbon.Base;
 using Carbon.Extensions;
+using Steamworks;
 using CarbonClient = Carbon.Client.Client;
 
 /*
@@ -29,11 +30,11 @@ public partial class Category_Static
 #if !MINIMAL
 				CarbonAuto.Singleton.IsForceModded() ||
 #endif
-			                                  Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.IsEnabled() && module.ForceModded);
+			    Community.Runtime.ModuleProcessor.Modules.Any(x => x is BaseModule module && module.IsEnabled() && module.ForceModded);
 
 			public static void Postfix()
 			{
-				if (Community.Runtime == null || Community.Runtime.Config == null) return;
+				if (!SteamServer.IsValid || Community.Runtime == null || Community.Runtime.Config == null) return;
 
 				try
 				{
@@ -56,6 +57,15 @@ public partial class Category_Static
 					{
 						ServerTagEx.UnsetRequiredTag("^z", true);
 					}
+
+					#if !MINIMAL
+
+					if (!string.IsNullOrEmpty(Community.Runtime.Core.CustomMapName))
+					{
+						SteamServer.MapName = Community.Runtime.Core.CustomMapName;
+					}
+
+					#endif
 				}
 				catch (Exception ex)
 				{
