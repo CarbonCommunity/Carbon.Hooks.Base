@@ -26,9 +26,9 @@ public partial class Category_Fixes
 				if (__instance.FindBurnable() == null && !__instance.CanRunWithNoFuel)
 					return true;
 
-				if (Community.Runtime.Core.IOvenSmeltSpeedMultiplier(__instance) is not float value) return true;
+				if (Community.Runtime.Core.IOvenSmeltSpeedMultiplier(__instance) is not float speedMultiplier) return true;
 
-				var newBurnTime = 0.5f * value;
+				var newBurnTime = 0.5f * speedMultiplier;
 				__instance.inventory.temperature = __instance.cookingTemperature;
 				__instance.UpdateAttachmentTemperature();
 				__instance.InvokeRepeating(__instance.Cook, newBurnTime, newBurnTime);
