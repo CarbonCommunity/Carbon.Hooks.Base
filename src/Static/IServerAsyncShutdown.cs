@@ -53,7 +53,7 @@ public partial class Category_Static
 					}
 				}
 
-				foreach (var plugin in ModLoader.LoadedPackages.SelectMany(package => package.Plugins))
+				foreach (var plugin in ModLoader.Packages.SelectMany(package => package.Plugins))
 				{
 					await HandleHookable(plugin);
 				}
