@@ -3,6 +3,7 @@ using System.Composition;
 using System.Net;
 using System.Runtime.Serialization;
 using API.Hooks;
+using Carbon.Components;
 using Carbon.Extensions;
 using Facepunch;
 using Facepunch.Extend;
@@ -34,6 +35,7 @@ public partial class Category_Static
 		public class IOnRconCommand : Patch
 		{
 			internal static string[] EmptyArgs = new string[0];
+			internal static string Space = " ";
 
 			public static bool Prefix(RCon.Command cmd)
 			{
@@ -45,10 +47,15 @@ public partial class Category_Static
 
 				try
 				{
-					var split = cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
-					var command = split[0].Trim();
+					using var split = TemporaryArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
+					var command = split.Get(0).Trim();
+					var arguments = split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs;
 
-					var arguments = split.Length > 1 ? cmd.Message.Substring(command.Length + 1).SplitQuotesStrings() : EmptyArgs;
+					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
+					{
+						command = alias;
+						cmd.Message = $"{alias} {arguments.ToString(Space)}";
+					}
 
 					if (HookCaller.CallStaticHook(3740958730, cmd.Ip, command, arguments) != null)
 					{
