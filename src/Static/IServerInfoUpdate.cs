@@ -34,7 +34,7 @@ public partial class Category_Static
 
 			public static void Postfix()
 			{
-				if (!SteamServer.IsValid || Community.Runtime == null || Community.Runtime.Config == null) return;
+				if (!SteamServer.IsValid || Community.Runtime == null || Community.Runtime.Config == null || Community.Runtime.Core == null) return;
 
 				try
 				{
