@@ -1,5 +1,6 @@
 ﻿using System;
 using API.Hooks;
+using Facepunch.Extend;
 
 /*
  *
@@ -38,27 +39,25 @@ public partial class Category_Fixes
 				{
 					try
 					{
-						if (entity != null && entity.name.ToLower() == fullString ||
-						    entity.name.StartsWith(fullString, StringComparison.CurrentCultureIgnoreCase) ||
-						    entity.GetType().Name.ToLower() == fullString)
+						if (entity == null || !(entity.PrefabName.Contains(fullString, StringComparison.InvariantCultureIgnoreCase) ||
+						                          entity.GetType().Name.Equals(fullString, StringComparison.InvariantCultureIgnoreCase)))
 						{
-							if (entity.IsValid())
-							{
-								if (entity is BasePlayer player)
-								{
-									if (player.IsConnected)
-									{
-										return;
-									}
-								}
+							return;
+						}
 
-								count++;
-								entity.Kill();
-							}
-							else
+						if (entity.IsValid())
+						{
+							if (entity is BasePlayer { IsConnected: true })
 							{
-								invalidEntities++;
+								return;
 							}
+
+							count++;
+							entity.Kill();
+						}
+						else
+						{
+							invalidEntities++;
 						}
 					}
 					catch (Exception ex)
