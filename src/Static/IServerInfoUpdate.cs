@@ -39,15 +39,6 @@ public partial class Category_Static
 				{
 					ServerTagEx.SetRequiredTag("^y", true);
 
-					if (Community.Runtime.ClientConfig.Enabled)
-					{
-						ServerTagEx.SetRequiredTag("c4c", false);
-					}
-					else
-					{
-						ServerTagEx.UnsetRequiredTag("c4c", false);
-					}
-
 					if (Community.Runtime.Config.IsModded || ForceModded)
 					{
 						ServerTagEx.SetRequiredTag("^z", true);
