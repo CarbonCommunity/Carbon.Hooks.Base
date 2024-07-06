@@ -5,7 +5,6 @@ using API.Hooks;
 using Carbon.Base;
 using Carbon.Extensions;
 using Steamworks;
-using CarbonClient = Carbon.Client.Client;
 
 /*
  *
