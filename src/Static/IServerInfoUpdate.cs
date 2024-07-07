@@ -5,7 +5,6 @@ using API.Hooks;
 using Carbon.Base;
 using Carbon.Extensions;
 using Steamworks;
-using CarbonClient = Carbon.Client.Client;
 
 /*
  *
@@ -39,15 +38,6 @@ public partial class Category_Static
 				try
 				{
 					ServerTagEx.SetRequiredTag("^y", true);
-
-					if (Community.Runtime.ClientConfig.Enabled)
-					{
-						ServerTagEx.SetRequiredTag("c4c", false);
-					}
-					else
-					{
-						ServerTagEx.UnsetRequiredTag("c4c", false);
-					}
 
 					if (Community.Runtime.Config.IsModded || ForceModded)
 					{

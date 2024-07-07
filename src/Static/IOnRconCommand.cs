@@ -47,7 +47,7 @@ public partial class Category_Static
 
 				try
 				{
-					using var split = TemporaryArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
+					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Get(0).Trim();
 					var arguments = split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs;
 
