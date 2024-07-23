@@ -33,10 +33,11 @@ public partial class Category_Static
 		{
 			internal static string[] EmptyArgs = new string[0];
 			internal static string Space = " ";
+			internal static readonly string[] Filters = ["no_input"];
 
 			public static bool Prefix(ConsoleSystem.Option options, string strCommand, object[] args)
 			{
-				if (Community.Runtime == null) return true;
+				if (Community.Runtime == null || Filters.Contains(strCommand)) return true;
 
 				try
 				{
