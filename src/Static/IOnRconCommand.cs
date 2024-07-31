@@ -49,7 +49,11 @@ public partial class Category_Static
 				{
 					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Get(0).Trim();
-					var arguments = split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs;
+
+					var temp = Facepunch.Pool.GetList<string>();
+                    temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
+                    var arguments = temp.ToArray();
+                    Facepunch.Pool.FreeList(ref temp);
 
 					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 					{
@@ -95,6 +99,7 @@ public partial class Category_Static
 					}
 
 					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+					return false;
 				}
 				catch { }
 
