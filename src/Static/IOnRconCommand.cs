@@ -66,7 +66,6 @@ public partial class Category_Static
 						return false;
 					}
 
-					Command.FromRcon = API.Commands.Command.FromRcon = true;
 
 					var consoleArg = FormatterServices.GetUninitializedObject(typeof(Arg)) as Arg;
 					var option = Option.Server;
@@ -79,6 +78,8 @@ public partial class Category_Static
 					{
 						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command, out var outCommand))
 						{
+							Command.FromRcon = API.Commands.Command.FromRcon = true;
+
 							var commandArgs = Facepunch.Pool.Get<API.Commands.Command.Args>();
 							commandArgs.Token = consoleArg;
 							commandArgs.Type = outCommand.Type;
@@ -91,6 +92,7 @@ public partial class Category_Static
 
 							commandArgs.Dispose();
 							Facepunch.Pool.Free(ref commandArgs);
+
 							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 							return false;
 						}
@@ -99,8 +101,6 @@ public partial class Category_Static
 					{
 						Logger.Error("RconCommand_OnCommand", ex);
 					}
-
-					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 				}
 				catch { }
 
