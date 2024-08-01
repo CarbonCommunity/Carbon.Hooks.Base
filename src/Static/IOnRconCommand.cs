@@ -49,7 +49,11 @@ public partial class Category_Static
 				{
 					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Get(0).Trim();
-					var arguments = split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs;
+
+					var temp = Facepunch.Pool.GetList<string>();
+                    temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
+                    var arguments = temp.ToArray();
+                    Facepunch.Pool.FreeList(ref temp);
 
 					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 					{
@@ -62,7 +66,6 @@ public partial class Category_Static
 						return false;
 					}
 
-					Command.FromRcon = API.Commands.Command.FromRcon = true;
 
 					var consoleArg = FormatterServices.GetUninitializedObject(typeof(Arg)) as Arg;
 					var option = Option.Server;
@@ -75,6 +78,8 @@ public partial class Category_Static
 					{
 						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command, out var outCommand))
 						{
+							Command.FromRcon = API.Commands.Command.FromRcon = true;
+
 							var commandArgs = Facepunch.Pool.Get<API.Commands.Command.Args>();
 							commandArgs.Token = consoleArg;
 							commandArgs.Type = outCommand.Type;
@@ -87,14 +92,15 @@ public partial class Category_Static
 
 							commandArgs.Dispose();
 							Facepunch.Pool.Free(ref commandArgs);
+
+							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+							return false;
 						}
 					}
 					catch (Exception ex)
 					{
 						Logger.Error("RconCommand_OnCommand", ex);
 					}
-
-					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 				}
 				catch { }
 
