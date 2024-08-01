@@ -91,6 +91,8 @@ public partial class Category_Static
 
 							commandArgs.Dispose();
 							Facepunch.Pool.Free(ref commandArgs);
+							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+							return false;
 						}
 					}
 					catch (Exception ex)
@@ -99,7 +101,6 @@ public partial class Category_Static
 					}
 
 					Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
-					return false;
 				}
 				catch { }
 
