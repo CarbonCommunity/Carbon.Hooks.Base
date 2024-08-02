@@ -52,7 +52,7 @@ public partial class Category_Static
 					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
 					if (args != null)
 					{
-						temp.AddRange(args.Select(arg => arg.ToString()));
+						temp.AddRange(args.Select(arg => arg?.ToString()));
 					}
 					var arguments = temp.ToArray();
 					Facepunch.Pool.FreeList(ref temp);
