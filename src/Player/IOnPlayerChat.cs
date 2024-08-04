@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Hooks;
-using Carbon.Components;
 using Carbon.Core;
 using ConVar;
-using Oxide.Core;
-using UnityEngine;
 using static ConVar.Chat;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Player
@@ -31,7 +21,7 @@ public partial class Category_Player
 			public static bool IsValidCommand(string input, BasePlayer player, out API.Commands.Command.Prefix prefix)
 			{
 				prefix = null;
-				
+
 				if (string.IsNullOrEmpty(input))
 				{
 					return false;

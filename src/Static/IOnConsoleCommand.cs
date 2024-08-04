@@ -9,14 +9,8 @@ using Facepunch.Extend;
 using static ConsoleSystem;
 using Command = API.Commands.Command;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 #pragma warning disable IDE0060
 

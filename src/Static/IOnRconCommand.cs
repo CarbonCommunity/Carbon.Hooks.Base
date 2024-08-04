@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Composition;
 using System.Net;
 using System.Runtime.Serialization;
 using API.Hooks;
@@ -10,14 +9,8 @@ using Facepunch.Extend;
 using static ConsoleSystem;
 using Command = Oxide.Game.Rust.Libraries.Command;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Static
