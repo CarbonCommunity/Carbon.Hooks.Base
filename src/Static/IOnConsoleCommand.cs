@@ -9,14 +9,8 @@ using Facepunch.Extend;
 using static ConsoleSystem;
 using Command = API.Commands.Command;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 #pragma warning disable IDE0060
 
@@ -33,21 +27,36 @@ public partial class Category_Static
 		{
 			internal static string[] EmptyArgs = new string[0];
 			internal static string Space = " ";
+			internal static readonly string[] Filters = ["no_input"];
 
-			public static bool Prefix(ConsoleSystem.Option options, string strCommand, object[] args)
+			public static bool Prefix(Option options, string strCommand, object[] args)
 			{
-				if (Community.Runtime == null) return true;
+				if (Community.Runtime == null || Filters.Contains(strCommand))
+				{
+					return true;
+				}
 
 				try
 				{
-					using var split = TempArray<string>.New(strCommand.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
+					using var split = TempArray<string>.New(strCommand.Split(ConsoleArgEx.CommandSpacing,
+						StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Length == 0 ? string.Empty : split.Get(0).Trim();
-					var arguments = split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs;
+
+					var temp = Facepunch.Pool.GetList<string>();
+					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
+					if (args != null)
+					{
+						temp.AddRange(args.Select(arg => arg?.ToString()));
+					}
+					var arguments = temp.ToArray();
+					Facepunch.Pool.FreeList(ref temp);
 
 					if (!Command.FromRcon)
 					{
 						var player = options.Connection?.player as BasePlayer;
-						var commands = player == null ? Community.Runtime.CommandManager.RCon : Community.Runtime.CommandManager.ClientConsole;
+						var commands = player == null
+							? Community.Runtime.CommandManager.RCon
+							: Community.Runtime.CommandManager.ClientConsole;
 
 						if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 						{
@@ -92,7 +101,9 @@ public partial class Category_Static
 								return true;
 							}
 
-							var suggestion = Suggestions.Lookup(command, Community.Runtime.CommandManager.ClientConsole.Select(x => x.Name).Concat(Community.Runtime.Config.Aliases.Select(x => x.Key)), minimumConfidence: 5);
+							var suggestion = Suggestions.Lookup(command,
+								Community.Runtime.CommandManager.ClientConsole.Select(x => x.Name)
+									.Concat(Community.Runtime.Config.Aliases.Select(x => x.Key)), minimumConfidence: 5);
 
 							if (suggestion.Any())
 							{
@@ -112,7 +123,10 @@ public partial class Category_Static
 						}
 					}
 				}
-				catch (Exception exception) { Logger.Error($"Failed ConsoleSystem.Run [{strCommand}] [{string.Join(" ", args)}]", exception); }
+				catch (Exception exception)
+				{
+					Logger.Error($"Failed ConsoleSystem.Run [{strCommand}] [{string.Join(" ", args)}]", exception);
+				}
 
 				return true;
 			}
