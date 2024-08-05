@@ -1,6 +1,5 @@
 ﻿using System;
 using API.Hooks;
-using Facepunch.Extend;
 
 namespace Carbon.Hooks;
 
