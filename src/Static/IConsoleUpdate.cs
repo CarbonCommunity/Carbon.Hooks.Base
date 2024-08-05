@@ -7,14 +7,6 @@ using Windows;
 using HarmonyLib;
 using Patch = API.Hooks.Patch;
 
-/*
- *
- * Copyright (c) 2023 Carbon Community
- * Copyright (c) 2023 turner
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
 
 #if WIN
