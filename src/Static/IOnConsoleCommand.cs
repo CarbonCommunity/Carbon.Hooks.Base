@@ -9,14 +9,8 @@ using Facepunch.Extend;
 using static ConsoleSystem;
 using Command = API.Commands.Command;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 #pragma warning disable IDE0060
 
@@ -50,7 +44,10 @@ public partial class Category_Static
 
 					var temp = Facepunch.Pool.GetList<string>();
 					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
-					temp.AddRange(args.Select(arg => arg.ToString()));
+					if (args != null)
+					{
+						temp.AddRange(args.Select(arg => arg?.ToString()));
+					}
 					var arguments = temp.ToArray();
 					Facepunch.Pool.FreeList(ref temp);
 

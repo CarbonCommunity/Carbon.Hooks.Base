@@ -6,14 +6,8 @@ using Carbon.Base;
 using Carbon.Core;
 using ConVar;
 
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 #pragma warning disable CS4014
 

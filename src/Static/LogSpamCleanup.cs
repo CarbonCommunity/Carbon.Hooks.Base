@@ -5,14 +5,8 @@ using API.Hooks;
 using HarmonyLib;
 using Patch = API.Hooks.Patch;
 
-/*
- *
- * Copyright (c) 2022-2024 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Static
