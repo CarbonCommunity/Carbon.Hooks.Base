@@ -1,19 +1,9 @@
-﻿using System.Threading.Tasks;
-using API.Hooks;
-using ConVar;
+﻿using API.Hooks;
 using Oxide.Core;
 using Oxide.Core.Plugins;
-using UnityEngine;
-using static ConVar.Chat;
-
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
 
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Plugin

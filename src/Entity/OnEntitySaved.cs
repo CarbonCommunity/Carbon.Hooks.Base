@@ -1,19 +1,7 @@
-﻿using System.Threading.Tasks;
-using API.Hooks;
-using ConVar;
-using Oxide.Core;
-using Oxide.Core.Plugins;
-using UnityEngine;
-using static ConVar.Chat;
-
-/*
- *
- * Copyright (c) 2022-2023 Carbon Community
- * All rights reserved.
- *
- */
+﻿using API.Hooks;
 
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Entity

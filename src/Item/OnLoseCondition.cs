@@ -1,14 +1,8 @@
 ﻿using API.Hooks;
 using Carbon.Core;
 
-/*
- *
- * Copyright (c) 2022-2024 Carbon Community
- * All rights reserved.
- *
- */
-
 namespace Carbon.Hooks;
+
 #pragma warning disable IDE0051
 
 public partial class Category_Item
