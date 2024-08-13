@@ -10,7 +10,7 @@ public partial class Category_Static
 {
 	public partial class Static_ServerMgr
 	{
-		[HookAttribute.Patch("OnServerInitialized", "OnServerInitialized", typeof(ServerMgr), "OpenConnection", new System.Type[] { })]
+		[HookAttribute.Patch("OnServerInitialized", "OnServerInitialized", typeof(ServerMgr), "OpenConnection", [typeof(bool)])]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called after the server startup has been completed and is awaiting connections.")]
