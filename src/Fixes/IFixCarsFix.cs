@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using API.Hooks;
 using Facepunch;
 using UnityEngine;
@@ -35,7 +36,7 @@ public partial class Category_Fixes
 				var tier = Mathf.Clamp(arg.GetInt(0, 2), 1, 3);
 				var count = 0;
 
-				var entities = Pool.GetList<BaseEntity>();
+				var entities = Pool.Get<List<BaseEntity>>();
 				Vis.Entities(player.transform.position, 10f, entities);
 
 				foreach(var entity in entities.Distinct())
@@ -54,7 +55,7 @@ public partial class Category_Fixes
 					}
 				}
 
-				Pool.FreeList(ref entities);
+				Pool.FreeUnmanaged(ref entities);
 
 				arg.ReplyWith($"Fixed up {count} vehicles.");
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization;
 using API.Hooks;
@@ -43,10 +44,10 @@ public partial class Category_Static
 					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Get(0).Trim();
 
-					var temp = Facepunch.Pool.GetList<string>();
+					var temp = Facepunch.Pool.Get<List<string>>();
                     temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
                     var arguments = temp.ToArray();
-                    Facepunch.Pool.FreeList(ref temp);
+                    Facepunch.Pool.FreeUnmanaged(ref temp);
 
 					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 					{
@@ -83,7 +84,6 @@ public partial class Category_Static
 
 							Community.Runtime.CommandManager.Execute(outCommand, commandArgs);
 
-							commandArgs.Dispose();
 							Facepunch.Pool.Free(ref commandArgs);
 
 							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
