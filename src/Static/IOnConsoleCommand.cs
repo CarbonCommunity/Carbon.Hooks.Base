@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using API.Commands;
@@ -42,14 +43,19 @@ public partial class Category_Static
 						StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Length == 0 ? string.Empty : split.Get(0).Trim();
 
-					var temp = Facepunch.Pool.GetList<string>();
+					if (string.IsNullOrEmpty(command))
+					{
+						return false;
+					}
+
+					var temp = Facepunch.Pool.Get<List<string>>();
 					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
 					if (args != null)
 					{
 						temp.AddRange(args.Select(arg => arg?.ToString()));
 					}
 					var arguments = temp.ToArray();
-					Facepunch.Pool.FreeList(ref temp);
+					Facepunch.Pool.FreeUnmanaged(ref temp);
 
 					if (!Command.FromRcon)
 					{
@@ -82,10 +88,6 @@ public partial class Category_Static
 
 							Command.FromRcon = false;
 							Community.Runtime.CommandManager.Execute(commandInstance, commandArgs);
-
-							commandArgs.Dispose();
-							Facepunch.Pool.Free(ref commandArgs);
-
 							return false;
 						}
 
