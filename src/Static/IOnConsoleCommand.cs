@@ -43,6 +43,11 @@ public partial class Category_Static
 						StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Length == 0 ? string.Empty : split.Get(0).Trim();
 
+					if (string.IsNullOrEmpty(command))
+					{
+						return false;
+					}
+
 					var temp = Facepunch.Pool.Get<List<string>>();
 					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
 					if (args != null)
