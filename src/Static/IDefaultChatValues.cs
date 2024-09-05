@@ -1,5 +1,7 @@
 ﻿using API.Hooks;
 using Carbon.Core;
+using Facepunch.Math;
+using UnityEngine;
 
 namespace Carbon.Hooks;
 
@@ -15,25 +17,37 @@ public partial class Category_Static
 
 		public class IDefaultChatValues : Patch
 		{
-			public static void Prefix(string message, ref string username, ref string color, ref ulong userid)
+			public static bool Prefix(string message, ref string username, ref string color, ref ulong userid)
 			{
 				const string defaultValue = "-1";
 
-				if(userid == 0ul && Community.Runtime.Core is CorePlugin core)
+				if(userid == 0ul)
 				{
-					if (core.DefaultServerChatName != defaultValue)
+					if (Community.Runtime.Core.DefaultServerChatName != defaultValue)
 					{
-						username = core.DefaultServerChatName;
+						username = Community.Runtime.Core.DefaultServerChatName;
 					}
-					if (core.DefaultServerChatColor != defaultValue)
+					if (Community.Runtime.Core.DefaultServerChatColor != defaultValue)
 					{
-						color = core.DefaultServerChatColor;
+						color = Community.Runtime.Core.DefaultServerChatColor;
 					}
-					if (core.DefaultServerChatId != -1)
+					if (Community.Runtime.Core.DefaultServerChatId != -1)
 					{
-						userid = (ulong)core.DefaultServerChatId;
+						userid = (ulong)Community.Runtime.Core.DefaultServerChatId;
 					}
 				}
+
+				var text = username.EscapeRichText();
+				ConsoleNetwork.BroadcastToAllClients("chat.add", 2, userid, $"<color={color}>{text}</color> {message}");
+				ConVar.Chat.ChatEntry ce = default;
+				ce.Channel = ConVar.Chat.ChatChannel.Server;
+				ce.Message = message;
+				ce.UserId = userid.ToString();
+				ce.Username = username;
+				ce.Color = color;
+				ce.Time = Epoch.Current;
+				ConVar.Chat.Record(ce);
+				return false;
 			}
 		}
 	}
