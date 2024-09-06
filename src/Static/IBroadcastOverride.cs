@@ -1,4 +1,5 @@
-﻿using API.Hooks;
+﻿using System.Xml.Linq;
+using API.Hooks;
 using Carbon.Core;
 using Facepunch.Math;
 using UnityEngine;
@@ -12,16 +13,27 @@ public partial class Category_Static
 #if !MINIMAL
 	public partial class Static_Debug
 	{
-		[HookAttribute.Patch("IDefaultChatValues", "IDefaultChatValues", typeof(ConVar.Chat), "Broadcast", new System.Type[] { typeof(string), typeof(string), typeof(string), typeof(ulong) })]
+		[HookAttribute.Patch("IBroadcastOverride", "IBroadcastOverride", typeof(ConVar.Chat), "Broadcast", new System.Type[] { typeof(string), typeof(string), typeof(string), typeof(ulong) })]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden | HookFlags.IgnoreChecksum)]
 
-		public class IDefaultChatValues : Patch
+		public class IBroadcastOverride : Patch
 		{
 			public static bool Prefix(string message, ref string username, ref string color, ref ulong userid)
 			{
+				// OnServerMessage
+				if(HookCaller.CallStaticHook(3155060134, message, username, color, userid) != null)
+				{
+					return false;
+				}
+
+				if (Community.Runtime.Core.NoGiveNoticesCache && username == "SERVER" && message.Contains("gave"))
+				{
+					return false;
+				}
+
 				const string defaultValue = "-1";
 
-				if(userid == 0ul)
+				if (userid == 0ul)
 				{
 					if (Community.Runtime.Core.DefaultServerChatName != defaultValue)
 					{
