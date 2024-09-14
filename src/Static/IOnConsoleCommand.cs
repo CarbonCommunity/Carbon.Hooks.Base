@@ -30,7 +30,7 @@ public partial class Category_Static
 			internal static string Space = " ";
 			internal static readonly string[] Filters = ["no_input"];
 
-			public static bool Prefix(Option options, string strCommand, object[] args)
+			public static bool Prefix(Option options, ref string strCommand, object[] args)
 			{
 				if (Community.Runtime == null || Filters.Contains(strCommand))
 				{
@@ -39,8 +39,7 @@ public partial class Category_Static
 
 				try
 				{
-					using var split = TempArray<string>.New(strCommand.Split(ConsoleArgEx.CommandSpacing,
-						StringSplitOptions.RemoveEmptyEntries));
+					using var split = TempArray<string>.New(strCommand.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Length == 0 ? string.Empty : split.Get(0).Trim();
 
 					if (string.IsNullOrEmpty(command))
