@@ -101,26 +101,6 @@ public partial class Category_Static
 							{
 								return true;
 							}
-
-							var suggestion = Suggestions.Lookup(command,
-								Community.Runtime.CommandManager.ClientConsole.Select(x => x.Name)
-									.Concat(Community.Runtime.Config.Aliases.Select(x => x.Key)), minimumConfidence: 5);
-
-							if (suggestion.Any())
-							{
-								var log = $"Command '{command}' not found. Suggesting: {suggestion.Select(x => x.Result).ToString(", ", " or ")}";
-
-								if (player != null)
-								{
-									player.ConsoleMessage(log);
-								}
-								else
-								{
-									Logger.Log(log);
-								}
-
-								return false;
-							}
 						}
 					}
 				}
