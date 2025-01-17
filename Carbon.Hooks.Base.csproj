@@ -2,7 +2,6 @@
 	<PropertyGroup>
 		<Product>Carbon.Hooks.Base</Product>
 		<OutputType>Library</OutputType>
-		<ProjectGuid>{DFA7C283-46B7-43BB-B847-766C1A8FFC12}</ProjectGuid>
 	</PropertyGroup>
 
 	<Import Project="$(SolutionDir)\.msbuild\Common.props" />
