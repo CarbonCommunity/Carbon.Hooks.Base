@@ -25,6 +25,7 @@ public partial class Category_Static
 		[MetadataAttribute.Parameter("ip", typeof(IPAddress))]
 		[MetadataAttribute.Parameter("command", typeof(string))]
 		[MetadataAttribute.Parameter("arguments", typeof(string[]))]
+		[MetadataAttribute.OxideCompatible]
 
 		public class IOnRconCommand : Patch
 		{
