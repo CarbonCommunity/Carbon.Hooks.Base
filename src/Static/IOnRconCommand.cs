@@ -9,6 +9,7 @@ using Facepunch;
 using Facepunch.Extend;
 using static ConsoleSystem;
 using Command = Oxide.Game.Rust.Libraries.Command;
+using Exception = System.Exception;
 
 namespace Carbon.Hooks;
 
@@ -42,13 +43,16 @@ public partial class Category_Static
 
 				try
 				{
-					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
+					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing,
+						StringSplitOptions.RemoveEmptyEntries));
 					var command = split.Get(0).Trim();
 
 					var temp = Facepunch.Pool.Get<List<string>>();
-                    temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
-                    var arguments = temp.ToArray();
-                    Facepunch.Pool.FreeUnmanaged(ref temp);
+					temp.AddRange(split.Length > 1
+						? cmd.Message[(command.Length + 1)..].SplitQuotesStrings()
+						: EmptyArgs);
+					var arguments = temp.ToArray();
+					Facepunch.Pool.FreeUnmanaged(ref temp);
 
 					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 					{
@@ -61,7 +65,6 @@ public partial class Category_Static
 						return false;
 					}
 
-
 					var consoleArg = FormatterServices.GetUninitializedObject(typeof(Arg)) as Arg;
 					var option = Option.Server;
 					option.FromRcon = true;
@@ -71,7 +74,8 @@ public partial class Category_Static
 
 					try
 					{
-						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command, out var outCommand))
+						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command,
+							    out var outCommand))
 						{
 							Command.FromRcon = API.Commands.Command.FromRcon = true;
 
@@ -87,7 +91,8 @@ public partial class Category_Static
 
 							Facepunch.Pool.Free(ref commandArgs);
 
-							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
+							Community.Runtime.Core.NextFrame(() =>
+								Command.FromRcon = API.Commands.Command.FromRcon = false);
 							return false;
 						}
 					}
@@ -96,7 +101,11 @@ public partial class Category_Static
 						Logger.Error("RconCommand_OnCommand", ex);
 					}
 				}
-				catch { }
+				finally
+				{
+					RCon.responseIdentifier = 0;
+					RCon.responseConnection = -1;
+				}
 
 				return true;
 			}
