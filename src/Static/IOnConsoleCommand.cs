@@ -87,6 +87,7 @@ public partial class Category_Static
 
 							Command.FromRcon = false;
 							Community.Runtime.CommandManager.Execute(commandInstance, commandArgs);
+							Facepunch.Pool.Free(ref commandArgs);
 							return false;
 						}
 

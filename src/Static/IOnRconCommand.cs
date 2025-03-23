@@ -79,7 +79,7 @@ public partial class Category_Static
 						{
 							Command.FromRcon = API.Commands.Command.FromRcon = true;
 
-							var commandArgs = Facepunch.Pool.Get<API.Commands.Command.Args>();
+							var commandArgs = Pool.Get<API.Commands.Command.Args>();
 							commandArgs.Token = consoleArg;
 							commandArgs.Type = outCommand.Type;
 							commandArgs.Arguments = arguments;
@@ -88,8 +88,7 @@ public partial class Category_Static
 							commandArgs.PrintOutput = consoleArg.Option.PrintOutput;
 
 							Community.Runtime.CommandManager.Execute(outCommand, commandArgs);
-
-							Facepunch.Pool.Free(ref commandArgs);
+							Pool.Free(ref commandArgs);
 
 							Community.Runtime.Core.NextFrame(() =>
 								Command.FromRcon = API.Commands.Command.FromRcon = false);
