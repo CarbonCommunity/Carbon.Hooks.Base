@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using API.Hooks;
 using Facepunch.Extend;
 
@@ -22,28 +23,26 @@ public partial class Category_Fixes
 					return false;
 				}
 
-				using var pool = Entities.GetAll(inherited: true);
-
 				var count = 0;
 				var invalidEntities = 0;
 				var failedEntities = 0;
 				var fullString = args.FullString.ToLower();
 
-				pool.Each(entity =>
+				foreach (var entity in BaseEntity.serverEntities.OfType<BaseEntity>())
 				{
 					try
 					{
 						if (entity == null || !(entity.PrefabName.Contains(fullString, StringComparison.InvariantCultureIgnoreCase) ||
-						                          entity.GetType().Name.Equals(fullString, StringComparison.InvariantCultureIgnoreCase)))
+						                        entity.GetType().Name.Equals(fullString, StringComparison.InvariantCultureIgnoreCase)))
 						{
-							return;
+							continue;
 						}
 
 						if (entity.IsValid())
 						{
 							if (entity is BasePlayer { IsConnected: true })
 							{
-								return;
+								continue;
 							}
 
 							count++;
@@ -59,7 +58,7 @@ public partial class Category_Fixes
 						Logger.Error($"Failed destroying '{entity}'", ex);
 						failedEntities++;
 					}
-				});
+				}
 
 				args.ReplyWith($"Deleted {count:n0} entities (found {invalidEntities:n0} invalid, {failedEntities:n0} failed).");
 				return false;
