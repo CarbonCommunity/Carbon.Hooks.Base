@@ -39,8 +39,8 @@ public partial class Category_Static
 
 				try
 				{
-					using var split = TempArray<string>.New(strCommand.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries));
-					var command = split.Length == 0 ? string.Empty : split.Get(0).Trim();
+					var split = strCommand.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
+					var command = split.Length == 0 ? string.Empty : split[0].Trim();
 
 					if (string.IsNullOrEmpty(command))
 					{

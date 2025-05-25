@@ -43,9 +43,8 @@ public partial class Category_Static
 
 				try
 				{
-					using var split = TempArray<string>.New(cmd.Message.Split(ConsoleArgEx.CommandSpacing,
-						StringSplitOptions.RemoveEmptyEntries));
-					var command = split.Get(0).Trim();
+					var split = cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
+					var command = split.Length > 0 ? split[0].Trim() : string.Empty;
 
 					var temp = Facepunch.Pool.Get<List<string>>();
 					temp.AddRange(split.Length > 1
