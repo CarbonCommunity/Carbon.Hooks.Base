@@ -13,7 +13,7 @@ public partial class Category_Player
 {
 	public partial class BasePlayer_Player
 	{
-		[HookAttribute.Patch("IOnPlayerChat", "IOnPlayerChat", typeof(ConVar.Chat), "sayAs", new System.Type[] { typeof(Chat.ChatChannel), typeof(ulong), typeof(string), typeof(string), typeof(BasePlayer) })]
+		[HookAttribute.Patch("IOnPlayerChat", "IOnPlayerChat", typeof(ConVar.Chat), "sayAs", [typeof(Chat.ChatChannel), typeof(ulong), typeof(string), typeof(string), typeof(BasePlayer)])]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.Hidden)]
 		[MetadataAttribute.OxideCompatible]
 

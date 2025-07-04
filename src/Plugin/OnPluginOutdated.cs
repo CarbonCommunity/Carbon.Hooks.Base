@@ -10,7 +10,7 @@ public partial class Category_Plugin
 {
 	public partial class Plugin_Outdated
 	{
-		[HookAttribute.Patch("OnPluginOutdated", "OnPluginOutdated", null, null, null)]
+		[HookAttribute.Patch("OnPluginOutdated", "OnPluginOutdated")]
 		[HookAttribute.Options(HookFlags.MetadataOnly)]
 
 		[MetadataAttribute.Category("Plugin")]
