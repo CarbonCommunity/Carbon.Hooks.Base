@@ -10,12 +10,14 @@ public partial class Category_Static
 {
 	public partial class Static_ServerMgr
 	{
-		[HookAttribute.Patch("OnServerInitialized", "OnServerInitialized", typeof(ServerMgr), "OpenConnection", [typeof(bool)])]
+		[MetadataAttribute.Parameter("invoker", typeof(BasePlayer))]
+
+		[HookAttribute.Patch("IOnServerInitialized", "IOnServerInitialized", typeof(ServerMgr), "OpenConnection", [typeof(bool)])]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called after the server startup has been completed and is awaiting connections.")]
 		[MetadataAttribute.Info("Also called for plugins that are hotloaded while the server is already started running.")]
-		[MetadataAttribute.Parameter("initialLoad", typeof(bool), true)]
+		[MetadataAttribute.Parameter("initialized", typeof(bool), true)]
 		[MetadataAttribute.OxideCompatible]
 
 		public class IOnServerInitialized : Patch
