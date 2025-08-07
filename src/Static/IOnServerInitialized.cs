@@ -10,9 +10,7 @@ public partial class Category_Static
 {
 	public partial class Static_ServerMgr
 	{
-		[MetadataAttribute.Parameter("invoker", typeof(BasePlayer))]
-
-		[HookAttribute.Patch("IOnServerInitialized", "IOnServerInitialized", typeof(ServerMgr), "OpenConnection", [typeof(bool)])]
+		[HookAttribute.Patch("OnServerInitialized", "OnServerInitialized", typeof(ServerMgr), "OpenConnection", [typeof(bool)])]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called after the server startup has been completed and is awaiting connections.")]
