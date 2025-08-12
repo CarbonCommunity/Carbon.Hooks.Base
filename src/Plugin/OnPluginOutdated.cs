@@ -1,4 +1,6 @@
-﻿using API.Hooks;
+﻿#if !MINIMAL
+using API.Hooks;
+using Carbon.Modules;
 using Oxide.Core;
 using Oxide.Core.Plugins;
 
@@ -10,7 +12,7 @@ public partial class Category_Plugin
 {
 	public partial class Plugin_Outdated
 	{
-		[HookAttribute.Patch("OnPluginOutdated", "OnPluginOutdated")]
+		[HookAttribute.Patch("OnPluginOutdated", "OnPluginOutdated", typeof(AdminModule.PluginsTab.Vendor), "VersionCheck")]
 		[HookAttribute.Options(HookFlags.MetadataOnly)]
 
 		[MetadataAttribute.Category("Plugin")]
@@ -27,3 +29,4 @@ public partial class Category_Plugin
 		}
 	}
 }
+#endif
