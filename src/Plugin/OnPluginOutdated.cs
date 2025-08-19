@@ -23,10 +23,7 @@ public partial class Category_Plugin
 		[MetadataAttribute.Parameter("plugin", typeof(Plugin))]
 		[MetadataAttribute.Parameter("vendorName", typeof(string))]
 
-		public class OnPluginOutdated : Patch
-		{
-
-		}
+		public class OnPluginOutdated : Patch;
 	}
 }
 #endif
