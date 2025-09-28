@@ -88,7 +88,7 @@ public partial class Category_Static
 
 							Command.FromRcon = false;
 							Community.Runtime.CommandManager.Execute(commandInstance, commandArgs);
-							__result = new CommandResult(CommandResultType.Success, commandArgs.Reply, arg.cmd);
+							__result = new CommandResult(CommandResultType.Success, arg.Reply, arg.cmd);
 							Facepunch.Pool.Free(ref commandArgs);
 							return false;
 						}

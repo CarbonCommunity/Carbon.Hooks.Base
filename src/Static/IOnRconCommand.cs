@@ -73,8 +73,7 @@ public partial class Category_Static
 
 					try
 					{
-						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command,
-							    out var outCommand))
+						if (Community.Runtime.CommandManager.Contains(Community.Runtime.CommandManager.RCon, command, out var outCommand))
 						{
 							Command.FromRcon = API.Commands.Command.FromRcon = true;
 
@@ -89,8 +88,7 @@ public partial class Category_Static
 							Community.Runtime.CommandManager.Execute(outCommand, commandArgs);
 							Pool.Free(ref commandArgs);
 
-							Community.Runtime.Core.NextFrame(() =>
-								Command.FromRcon = API.Commands.Command.FromRcon = false);
+							Community.Runtime.Core.NextFrame(() => Command.FromRcon = API.Commands.Command.FromRcon = false);
 							return false;
 						}
 					}
