@@ -26,7 +26,7 @@ public partial class Category_Fixes
 				var count = 0;
 				var invalidEntities = 0;
 				var failedEntities = 0;
-				var fullString = args.FullString.ToLower();
+				var fullString = args.GetString(0);
 
 				foreach (var entity in BaseEntity.serverEntities.OfType<BaseEntity>())
 				{
