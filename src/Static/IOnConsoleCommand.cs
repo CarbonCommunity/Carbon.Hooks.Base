@@ -19,7 +19,7 @@ public partial class Category_Static
 {
 	public partial class Static_ConsoleSystem
 	{
-		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "Run", new System.Type[] { typeof(Option), typeof(string), typeof(object[]) })]
+		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "RunWithResult", new System.Type[] { typeof(Option), typeof(string), typeof(object[]) })]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called whenever a Carbon server command is called.")]
@@ -30,7 +30,7 @@ public partial class Category_Static
 			internal static string Space = " ";
 			internal static readonly string[] Filters = ["no_input"];
 
-			public static bool Prefix(Option options, ref string strCommand, object[] args)
+			public static bool Prefix(ref CommandResult __result, Option options, ref string strCommand, object[] args)
 			{
 				if (Community.Runtime == null || Filters.Contains(strCommand))
 				{
@@ -44,6 +44,7 @@ public partial class Category_Static
 
 					if (string.IsNullOrEmpty(command))
 					{
+						__result = new CommandResult(CommandResultType.CommandNotFound, null, null);
 						return false;
 					}
 
@@ -87,6 +88,7 @@ public partial class Category_Static
 
 							Command.FromRcon = false;
 							Community.Runtime.CommandManager.Execute(commandInstance, commandArgs);
+							__result = new CommandResult(CommandResultType.Success, arg.Reply, arg.cmd);
 							Facepunch.Pool.Free(ref commandArgs);
 							return false;
 						}

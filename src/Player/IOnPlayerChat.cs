@@ -43,7 +43,7 @@ public partial class Category_Player
 
 				if (prefix.PrintToConsole)
 				{
-					ServerConsole.PrintColoured(ConsoleColor.DarkYellow, $"[{player.Connection}]: ", ConsoleColor.DarkGreen, input);
+					ServerConsole.PrintColoured($"[{player.Connection}]: {input}", ConsoleColor.DarkYellow);
 				}
 
 				return true;
