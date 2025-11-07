@@ -29,11 +29,9 @@ public partial class Category_Fixes
 				var failedEntities = 0;
 				var fullString = args.GetString(0);
 
-				using var entities = Pool.Get<PooledList<BaseEntity>>();
-				entities.AddRange(BaseEntity.serverEntities.OfType<BaseEntity>());
-				for(int i = 0; i < entities.Count; i++)
+				using var entities = Pool.Get<PooledList<BaseNetworkable>>();
+				foreach (var entity in BaseEntity.serverEntities)
 				{
-					var entity = entities[i];
 					try
 					{
 						if (entity == null || !(entity.PrefabName.Contains(fullString, StringComparison.InvariantCultureIgnoreCase) ||
@@ -50,7 +48,7 @@ public partial class Category_Fixes
 							}
 
 							count++;
-							entity.Kill();
+							entities.Add(entity);
 						}
 						else
 						{
@@ -63,7 +61,10 @@ public partial class Category_Fixes
 						failedEntities++;
 					}
 				}
-
+				for(int i = 0; i < entities.Count; i++)
+				{
+					entities[i].Kill();
+				}
 				args.ReplyWith($"Deleted {count:n0} entities (found {invalidEntities:n0} invalid, {failedEntities:n0} failed).");
 				return false;
 			}
