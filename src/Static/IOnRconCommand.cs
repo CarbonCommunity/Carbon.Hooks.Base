@@ -65,7 +65,8 @@ public partial class Category_Static
 					}
 
 					var consoleArg = FormatterServices.GetUninitializedObject(typeof(Arg)) as Arg;
-					var option = Option.Server.Quiet().FromRconConnection(cmd.ConnectionId, cmd.Ip.ToString(), cmd.Name);
+					var option = Option.Server.FromRconConnection(cmd.ConnectionId, cmd.Ip.ToString(), cmd.Name);
+					option.FromRcon = true;
 					consoleArg.Option = option;
 					consoleArg.FullString = cmd.Message;
 					consoleArg.Args = arguments;
