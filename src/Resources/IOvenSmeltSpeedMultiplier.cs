@@ -10,23 +10,28 @@ public partial class Category_Fixes
 {
 	public partial class Fixes_ItemCrafter
 	{
-		[HookAttribute.Patch("IOvenSmeltSpeedMultiplier", "IOvenSmeltSpeedMultiplier", typeof(BaseOven), nameof(BaseOven.StartCooking), new System.Type[] { })]
+		[HookAttribute.Patch("IOvenSmeltSpeedMultiplier", "IOvenSmeltSpeedMultiplier", typeof(BaseOven.BaseOvenWorkQueue), nameof(BaseOven.BaseOvenWorkQueue.RunJob), [typeof(BaseOven)])]
 		[HookAttribute.Options(HookFlags.Hidden)]
 
 		public class IOvenSmeltSpeedMultiplier : Patch
 		{
-			public static bool Prefix(BaseOven __instance)
+			public static bool Prefix(BaseOven oven)
 			{
-				if (__instance.FindBurnable() == null && !__instance.CanRunWithNoFuel)
+				if (Community.Runtime.Core.IOvenSmeltSpeedMultiplier(oven) is not float speedMultiplier)
+				{
 					return true;
-
-				if (Community.Runtime.Core.IOvenSmeltSpeedMultiplier(__instance) is not float speedMultiplier) return true;
-
-				var newBurnTime = 0.5f * speedMultiplier;
-				__instance.inventory.temperature = __instance.cookingTemperature;
-				__instance.UpdateAttachmentTemperature();
-				__instance.InvokeRepeating(__instance.Cook, newBurnTime, newBurnTime);
-				__instance.SetFlag(BaseEntity.Flags.On, true);
+				}
+				if (oven.lastCookUpdate > BaseOven.UpdateRate * speedMultiplier)
+				{
+					oven.Cook(oven.lastCookUpdate);
+					oven.lastCookUpdate = 0.0f;
+				}
+				if (!oven.visualFood || oven.lastCookVisualsUpdate <= 0.05f)
+				{
+					return false;
+				}
+				oven.lastCookVisualsUpdate = 0.0f;
+				oven.CookVisuals();
 				return false;
 			}
 		}
