@@ -35,7 +35,10 @@ public partial class Category_Static
 
 			public static bool Prefix(RCon.Command cmd)
 			{
-				if (Community.Runtime == null) return true;
+				if (Community.Runtime == null)
+				{
+					return true;
+				}
 
 				RCon.responseIdentifier = cmd.Identifier;
 				RCon.responseConnection = cmd.ConnectionId;
@@ -46,12 +49,10 @@ public partial class Category_Static
 					var split = cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
 					var command = split.Length > 0 ? split[0].Trim() : string.Empty;
 
-					var temp = Facepunch.Pool.Get<List<string>>();
-					temp.AddRange(split.Length > 1
-						? cmd.Message[(command.Length + 1)..].SplitQuotesStrings()
-						: EmptyArgs);
+					var temp = Pool.Get<List<string>>();
+					temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
 					var arguments = temp.ToArray();
-					Facepunch.Pool.FreeUnmanaged(ref temp);
+					Pool.FreeUnmanaged(ref temp);
 
 					if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 					{
@@ -59,17 +60,12 @@ public partial class Category_Static
 						cmd.Message = $"{alias} {arguments.ToString(Space)}";
 					}
 
+					var consoleArg = new Arg(Option.Server.Quiet().FromRconConnection(cmd.ConnectionId, cmd.Ip.ToString(), cmd.Name), cmd.Message);
+
 					if (HookCaller.CallStaticHook(3740958730, cmd.Ip, command, arguments) != null)
 					{
 						return false;
 					}
-
-					var consoleArg = FormatterServices.GetUninitializedObject(typeof(Arg)) as Arg;
-					var option = Option.Server;
-					option.FromRcon = true;
-					consoleArg.Option = option;
-					consoleArg.FullString = cmd.Message;
-					consoleArg.Args = arguments;
 
 					try
 					{

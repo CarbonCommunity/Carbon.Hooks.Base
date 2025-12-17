@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using API.Hooks;
+using Facepunch;
 using Facepunch.Extend;
 
 namespace Carbon.Hooks;
@@ -11,7 +12,7 @@ public partial class Category_Fixes
 {
 	public partial class Fixes_FixDel
 	{
-		[HookAttribute.Patch("IDelFix", "IDelFix", typeof(ConVar.Hierarchy), "del", new System.Type[] { typeof(ConsoleSystem.Arg) })]
+		[HookAttribute.Patch("IDelFix", "IDelFix", typeof(ConVar.Hierarchy), "del", [typeof(ConsoleSystem.Arg)])]
 		[HookAttribute.Options(HookFlags.Hidden | HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		public class IDelFix : Patch
@@ -28,7 +29,8 @@ public partial class Category_Fixes
 				var failedEntities = 0;
 				var fullString = args.GetString(0);
 
-				foreach (var entity in BaseEntity.serverEntities.OfType<BaseEntity>())
+				using var entities = Pool.Get<PooledList<BaseNetworkable>>();
+				foreach (var entity in BaseEntity.serverEntities)
 				{
 					try
 					{
@@ -46,7 +48,7 @@ public partial class Category_Fixes
 							}
 
 							count++;
-							entity.Kill();
+							entities.Add(entity);
 						}
 						else
 						{
@@ -59,7 +61,10 @@ public partial class Category_Fixes
 						failedEntities++;
 					}
 				}
-
+				for(int i = 0; i < entities.Count; i++)
+				{
+					entities[i].Kill();
+				}
 				args.ReplyWith($"Deleted {count:n0} entities (found {invalidEntities:n0} invalid, {failedEntities:n0} failed).");
 				return false;
 			}
