@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using API.Commands;
 using API.Hooks;
-using Carbon.Components;
 using Carbon.Extensions;
 using Facepunch.Extend;
 using static ConsoleSystem;
@@ -19,16 +18,16 @@ public partial class Category_Static
 {
 	public partial class Static_ConsoleSystem
 	{
-		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), "RunWithResult", new System.Type[] { typeof(Option), typeof(string), typeof(object[]) })]
+		[HookAttribute.Patch("OnConsoleCommand", "OnConsoleCommand", typeof(ConsoleSystem), nameof(RunWithResult), [typeof(Option), typeof(string), typeof(object[])])]
 		[HookAttribute.Options(HookFlags.Static | HookFlags.IgnoreChecksum)]
 
 		[MetadataAttribute.Info("Called whenever a Carbon server command is called.")]
 
 		public class IOnConsoleCommand : Patch
 		{
-			internal static string[] EmptyArgs = new string[0];
-			internal static string Space = " ";
-			internal static readonly string[] Filters = ["no_input"];
+			private static string[] EmptyArgs = new string[0];
+			private static string Space = " ";
+			private static readonly string[] Filters = ["no_input"];
 
 			public static bool Prefix(ref CommandResult __result, Option options, ref string strCommand, object[] args)
 			{
@@ -60,9 +59,7 @@ public partial class Category_Static
 					if (!Command.FromRcon)
 					{
 						var player = options.Connection?.player as BasePlayer;
-						var commands = player == null
-							? Community.Runtime.CommandManager.RCon
-							: Community.Runtime.CommandManager.ClientConsole;
+						var commands = player == null ? Community.Runtime.CommandManager.RCon : Community.Runtime.CommandManager.ClientConsole;
 
 						if (Community.Runtime.Config.Aliases.TryGetValue(command, out var alias))
 						{
