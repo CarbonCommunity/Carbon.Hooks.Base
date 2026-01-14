@@ -80,6 +80,8 @@ public partial class Category_Static
 							commandArgs.IsRCon = true;
 							commandArgs.IsServer = true;
 							commandArgs.PrintOutput = consoleArg.Option.PrintOutput;
+							consoleArg.Args = arguments;
+							consoleArg.cmd = outCommand.RustCommand;
 
 							Community.Runtime.CommandManager.Execute(outCommand, commandArgs);
 							Pool.Free(ref commandArgs);
