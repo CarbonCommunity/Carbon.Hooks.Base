@@ -22,11 +22,12 @@ public partial class Category_Fixes
 				{
 					return true;
 				}
-				if (oven.lastCookUpdate > BaseOven.UpdateRate * speedMultiplier)
+				var delta = BaseOven.UpdateRate * speedMultiplier;
+				if (oven.lastCookUpdate > delta)
 				{
-					var num = Mathf.Floor(oven.lastCookUpdate / BaseOven.UpdateRate);
-					oven.lastCookUpdate -= num * (BaseOven.UpdateRate * speedMultiplier);
-					oven.Cook(BaseOven.UpdateRate * num);
+					var num = Mathf.Floor(oven.lastCookUpdate / delta);
+					oven.lastCookUpdate -= num * delta;
+					oven.Cook(delta * num);
 				}
 				if (oven.visualFood && oven.lastCookVisualsUpdate > BaseOven.VisualUpdateRate)
 				{
