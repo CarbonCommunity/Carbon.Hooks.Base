@@ -1,6 +1,7 @@
 ﻿#if !MINIMAL
 
 using API.Hooks;
+using UnityEngine;
 
 namespace Carbon.Hooks;
 
@@ -23,15 +24,16 @@ public partial class Category_Fixes
 				}
 				if (oven.lastCookUpdate > BaseOven.UpdateRate * speedMultiplier)
 				{
-					oven.Cook(oven.lastCookUpdate);
-					oven.lastCookUpdate = 0.0f;
+					var num = Mathf.Floor(oven.lastCookUpdate / BaseOven.UpdateRate);
+					oven.lastCookUpdate -= num * (BaseOven.UpdateRate * speedMultiplier);
+					oven.Cook(BaseOven.UpdateRate * num);
 				}
-				if (!oven.visualFood || oven.lastCookVisualsUpdate <= 0.05f)
+				if (oven.visualFood && oven.lastCookVisualsUpdate > BaseOven.VisualUpdateRate)
 				{
-					return false;
+					oven.lastCookVisualsUpdate = 0f;
+					oven.CookVisuals();
 				}
-				oven.lastCookVisualsUpdate = 0.0f;
-				oven.CookVisuals();
+
 				return false;
 			}
 		}
