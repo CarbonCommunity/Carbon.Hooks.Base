@@ -50,7 +50,7 @@ public partial class Category_Player
 
 			}
 
-			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, string message, BasePlayer player, ref ValueTask<bool> __result)
+			public static bool Prefix(ChatChannel targetChannel, ulong userId, string username, ref string message, BasePlayer player, ValueTask<bool> __result)
 			{
 				if (string.IsNullOrEmpty(message)) return true;
 
@@ -60,7 +60,7 @@ public partial class Category_Player
 					return false;
 				}
 
-				if (CorePlugin.IOnPlayerChat(userId, username, message, targetChannel, player) is not bool hookValue2)
+				if (CorePlugin.IOnPlayerChat(userId, username, ref message, targetChannel, player) is not bool hookValue2)
 					return true;
 
 				__result = new ValueTask<bool>(hookValue2);
