@@ -34,7 +34,7 @@ public partial class Category_Player
 					return false;
 				}
 
-				if (!API.Commands.Command.HasPrefix(input[..1], out prefix)) return false;
+				if (!API.Commands.Command.HasPrefix(input, out prefix)) return false;
 
 				if (prefix.PrintToChat)
 				{
