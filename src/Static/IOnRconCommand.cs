@@ -30,7 +30,6 @@ public partial class Category_Static
 
 		public class IOnRconCommand : Patch
 		{
-			internal static string[] EmptyArgs = new string[0];
 			internal static string Space = " ";
 
 			public static bool Prefix(RCon.Command cmd)
@@ -46,11 +45,10 @@ public partial class Category_Static
 
 				try
 				{
-					var split = cmd.Message.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
-					var command = split.Length > 0 ? split[0].Trim() : string.Empty;
+					ConsoleArgEx.TryParseCommand(cmd.Message, out var command, out var parsedArguments);
 
 					var temp = Pool.Get<List<string>>();
-					temp.AddRange(split.Length > 1 ? cmd.Message[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
+					temp.AddRange(parsedArguments);
 					var arguments = temp.ToArray();
 					Pool.FreeUnmanaged(ref temp);
 
