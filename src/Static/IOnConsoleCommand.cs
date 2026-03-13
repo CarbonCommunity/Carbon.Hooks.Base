@@ -25,7 +25,6 @@ public partial class Category_Static
 
 		public class IOnConsoleCommand : Patch
 		{
-			private static string[] EmptyArgs = new string[0];
 			private static string Space = " ";
 			private static readonly string[] Filters = ["no_input"];
 
@@ -38,17 +37,14 @@ public partial class Category_Static
 
 				try
 				{
-					var split = strCommand.Split(ConsoleArgEx.CommandSpacing, StringSplitOptions.RemoveEmptyEntries);
-					var command = split.Length == 0 ? string.Empty : split[0].Trim();
-
-					if (string.IsNullOrEmpty(command))
+					if (!ConsoleArgEx.TryParseCommand(strCommand, out var command, out var parsedArguments))
 					{
 						__result = new CommandResult(CommandResultType.CommandNotFound, null, null);
 						return false;
 					}
 
 					var temp = Facepunch.Pool.Get<List<string>>();
-					temp.AddRange(split.Length > 1 ? strCommand[(command.Length + 1)..].SplitQuotesStrings() : EmptyArgs);
+					temp.AddRange(parsedArguments);
 					if (args != null)
 					{
 						temp.AddRange(args.Select(arg => arg?.ToString()));
